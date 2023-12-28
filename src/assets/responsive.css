@@ -1,0 +1,19 @@
+@media screen and (max-width: 730px) {
+    .nav_links {
+        display: block;
+        font-size: small;
+      }
+      .nav_links_search, .add_announce{
+        margin-bottom: 10px;
+      }
+
+      .hamburger {
+        display: flex;
+        cursor: pointer;
+      }
+      .hamburger #closeHam {
+        display: none;
+      }
+
+}
+

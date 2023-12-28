@@ -1,0 +1,139 @@
+:root {
+  --navbar-bg-color: #FF0019;
+  --logo-bg-color: #fff;
+  --blue-color: #2470A0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+}
+
+nav {
+  background-color: var(--navbar-bg-color);
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.logo {
+  background-color: var(--logo-bg-color);
+  text-align: center;
+  padding: 5px 10px;
+ 
+}
+
+.logo a {
+  text-decoration: none;
+  color: var(--navbar-bg-color);
+  font-weight: 900;
+}
+
+#logo_announce {
+  color: var(--blue-color);
+  font-weight: 900;
+}
+
+.nav_links {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+ 
+}
+
+.search {
+  border-radius: 20px;
+  outline: none;
+  border: none;
+  padding: 5px 10px;
+}
+
+.add_announce {
+  background-color: var(--blue-color);
+  padding: 5px 10px;
+  border-radius: 20px;
+  
+}
+
+.add_announce a {
+  text-decoration: none;
+  color: var(--logo-bg-color);
+}
+
+#plus {
+  font-weight: bolder;
+  font-size: larger;
+}
+
+.user_icon {
+  border-radius: 50%;
+}
+
+.icon_list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.icon_item {
+  position: relative;
+}
+
+.icon_link {
+  text-decoration: none;
+  color: var(--logo-bg-color); 
+  display: block;
+  font-weight: bolder;
+}
+
+.submenu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #fff; 
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 5%;
+}
+
+.icon_item:hover .submenu {
+  display: block;
+}
+
+.submenu_link {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: var(--blue-color); 
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.submenu_link:hover, .submenu_link:focus {
+  border-bottom: 4px solid var(--blue-color);
+  color: var(--navbar-bg-color);
+}
+
+.hamburger{
+  font-size:x-large;
+  display: none; 
+  font-weight: 800;
+  color: var(--logo-bg-color);
+}
+
+
+.barner{
+  padding: 10px 20px;
+  height: 300px;
+  background-color: var(--blue-color) ;
+  color: var(--logo-bg-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+ }
