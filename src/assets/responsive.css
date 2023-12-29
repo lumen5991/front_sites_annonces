@@ -1,19 +1,42 @@
 @media screen and (max-width: 730px) {
-    .nav_links {
-        display: block;
-        font-size: small;
-      }
-      .nav_links_search, .add_announce{
+    .nav_links{
+      display:inline-block;
+      text-align: right;
+      right: 0;
+    }
+      .nav_links_search, .add_announce, .user{
         margin-bottom: 10px;
       }
-
-      .hamburger {
-        display: flex;
-        cursor: pointer;
-      }
-      .hamburger #closeHam {
-        display: none;
-      }
-
 }
 
+@media screen and (max-width: 500px) {
+    nav{
+      display: block;
+      text-align: right;
+      margin-bottom: 10px;
+    }
+    .logo{
+      margin-bottom: 10px;
+    }
+}
+
+@media screen and (max-width:1000px){
+  .register_input{
+    width: 300px;
+  }
+}
+
+@media screen and (max-width:730px) {
+  .register_content{
+    display: block;
+  }
+  .register_content_left, register_content_right{
+    margin-bottom: 20px;
+  }
+  .register_file_label, .register_file_input{
+    text-align: left;
+  }
+  .register_input{
+    width: 100%;
+  }
+}

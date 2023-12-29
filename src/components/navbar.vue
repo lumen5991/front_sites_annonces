@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import iconUser from "../components/icons/user.vue";
+import { RouterLink } from 'vue-router';
+
 </script>
 
 <template>
     <div>
         <nav>
             <div class="logo">
-                <a href="#" translate="no">
+                <a href="/" translate="no" class="logo_announce">
                     TOP <span id="logo_announce">annonces</span>
                 </a>
             </div>
@@ -17,7 +19,7 @@ import iconUser from "../components/icons/user.vue";
                     </form>
                 </div>
                 <div class="add_announce">
-                    <a href="">
+                    <a href="" class="send_annonce">
                         <span id="plus">+</span> <span>Déposer une annonce</span>
                     </a>
                 </div>
@@ -26,24 +28,21 @@ import iconUser from "../components/icons/user.vue";
                     <div class="user_icon">
                         <ul class="icon_list">
                             <li class="icon_item">
-                                <a href="#" class="icon_link">
+                                <RouterLink :to="`#`" class="icon_link">
                                     <iconUser />
-                                </a>
+                                </RouterLink>
                                 <ul class="submenu">
                                     <li>
-                                        <a href="#" class="submenu_link">S'inscrire</a>
+                                        <p>Pas de compte? <RouterLink :to="`/register`" class="submenu_link">S'inscrire</RouterLink> </p>
                                     </li>
                                     <li>
-                                        <a href="#" class="submenu_link">Se connecter</a>
+                                        <p>Déjà un compte? <RouterLink :to="`#`" class="submenu_link">Se connecter</RouterLink> </p>
+
                                     </li>
                                 </ul>
                             </li>
                         </ul>
                     </div>
-                </div>
-                <div class="hamburger" >
-                    <span id="openHam">&#9776;</span>
-                    <span id="closeHam">&#x2716;</span>
                 </div>
             </div>
         </nav>
