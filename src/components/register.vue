@@ -30,7 +30,7 @@ const createUser = async () => {
             password_confirmation: password_confirmation.value
         };
 
-        const response = await clientHttp.post('http://localhost:3000/api/user/register', user);
+        const response = await clientHttp.post('http://localhost:8000/api/user/register', user);
 
         console.log('Réponse du backend :', response.data);
 
