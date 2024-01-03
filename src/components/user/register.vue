@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import navbar from './navbar.vue';
+import navbar from "@/components/navbar.vue";
 import { ref } from 'vue';
 import clientHttp from "@/libs/clientHttp";
 import { useRouter } from 'vue-router';
@@ -61,7 +61,7 @@ const createUser = async () => {
                     </div>
                     <div class="register_content">
                         <div class="register_content_left">
-                        <img src="../assets/images/user-profile.gif" alt=""
+                        <img src="../../assets/images/user-profile.gif" alt=""
                             style="width: 100%; height: 100%; object-fit: cover;">
                     </div>
                     <div class="register_content_right">

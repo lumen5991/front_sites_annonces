@@ -129,33 +129,42 @@ nav {
   border-bottom: 4px solid var(--blue-color);
   color: var(--navbar-bg-color);
 }
-.container_register {
+.container_register, .container_login, .container_myAccount {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height:100vh;
   background-color: #f4f4f4;
   padding: 30px;
- 
+}
+.container_login, .container_myAccount{
+  height:  calc(100vh - 60px) !important;
 }
 
-.register_c{
-  width: 80%;
-  margin: 20px auto;
+.register_c, .login_c, .myAccount{
+  margin: auto;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 10px;
 }
 
-.register_content {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+.myAccount{
+  padding: 30px !important;
 }
 
-.register_content_left {
+
+
+.register_content, .myAccount_content, .myAccount_crud{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.register_content_left  {
   flex: 1;
+ 
 }
 
 .register_content_right {
@@ -179,4 +188,6 @@ label {
   font-size: 12px;
   margin-left: 5px;
 }
+
+/* myAccount */
 

@@ -54,5 +54,21 @@
 
 }
 
+@media screen and (max-width:900px) {
+    .barner_title h2 {
+    font-size: 25px;
+    letter-spacing: 1px;
+}
+  
+}
+
+@media screen and (max-width:500px) {
+    .barner_title h2 {
+    font-size: 15px;
+    letter-spacing: 1px;
+}
+  
+}
+
 
 </style>

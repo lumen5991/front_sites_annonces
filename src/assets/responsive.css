@@ -1,7 +1,7 @@
 @media screen and (max-width: 730px) {
     .nav_links{
       display:inline-block;
-      text-align: right;
+      text-align: end;
       right: 0;
     }
       .nav_links_search, .add_announce, .user{

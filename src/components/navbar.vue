@@ -23,6 +23,10 @@ import { RouterLink } from 'vue-router';
                         <span id="plus">+</span> <span>Déposer une annonce</span>
                     </a>
                 </div>
+                <div>
+                    
+                </div>
+
 
                 <div class="user">
                     <div class="user_icon">
@@ -40,10 +44,10 @@ import { RouterLink } from 'vue-router';
                                         <p>Pas de compte? <RouterLink :to="`/register`" class="submenu_link">S'inscrire</RouterLink> </p>
                                     </li>
                                     <li>
-                                        <p>Déjà un compte? <RouterLink :to="`#`" class="submenu_link">Se connecter</RouterLink> </p>
+                                        <p>Déjà un compte? <RouterLink :to="`/login`" class="submenu_link">Se connecter</RouterLink> </p>
                                     </li>
                                     <li>
-                                        <p> <RouterLink :to="`#`" class="submenu_link">Mon compte</RouterLink>  </p>
+                                        <p> <RouterLink :to="`/my_account`" class="submenu_link">Mon compte</RouterLink>  </p>
                                     </li>
                                 </ul>
                             </li>
