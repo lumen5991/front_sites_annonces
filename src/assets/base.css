@@ -78,10 +78,6 @@ nav {
   font-size: larger;
 }
 
-.user_icon {
-  border-radius: 50%;
-}
-
 .icon_list {
   list-style: none;
   padding: 0;
@@ -133,42 +129,54 @@ nav {
   border-bottom: 4px solid var(--blue-color);
   color: var(--navbar-bg-color);
 }
+.container_register {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f4f4;
+  padding: 30px;
+ 
+}
 
-.container_register{
-  padding: 5px 10px;
-  margin: 50px 40px;
-  height: 100%;
-  box-shadow: rgba(0, 0, 0, 0.3) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-  }
+.register_c{
+  width: 80%;
+  margin: 20px auto;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+}
 
-  .register_content{
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-    padding: 0 50px;
-  }
-  .box_register_content_left{
-    text-align: center;
-    
+.register_content {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
 
-  }
-  .box_register_content_right{
-  
-    margin-bottom: 20px;
-  }
+.register_content_left {
+  flex: 1;
+}
 
-  .register_input{
-    padding: 5px 10px;
-    width: 450px;
-    outline-color: var(--other-blue);    
-    border: 2px solid var(--other-blue);
-    border-top:none;
-  }
+.register_content_right {
+  flex: 1;
+  padding: 20px;
+}
 
- .register_input:focus{
-    outline-color: var(--navbar-bg-color);    
-    border: 2px solid var(--navbar-bg-color);
+.box_register_content_right {
+  margin-bottom: 20px;
+}
 
-  }
+.register_input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+label {
+  font-size: 12px;
+  margin-left: 5px;
+}
+

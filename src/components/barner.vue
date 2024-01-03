@@ -4,9 +4,8 @@
 <template>
     <div class="barner">
         <div class="barner_title">
-           <h2>Retrouvez les meilleurs annonces par ICI...</h2> 
+            <h2> RETROUVEZ LES MEILLEURES ANNONCES PAR ICI </h2>
         </div>
-        
     </div>
 </template>
 
@@ -31,26 +30,29 @@
     padding: 5px 5px;
  
 }
+
+.barner_title {
+    opacity: 0;
+    transform: translateY(1em);
+    animation: fadeInLetter 5s ease-out forwards;
+}
+
+@keyframes fadeInLetter {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 .barner_title h2 {
-   
-    text-shadow: var(--blue-color) 4px 4px 4px;
+  
     position: relative;
     font-size: 45px;
     color: var(--logo-bg-color);
     font-weight: bolder;
     letter-spacing: 3px;
     white-space: nowrap;
-    overflow: hidden;
-    animation: scrollLeft 70s linear infinite; 
+
 }
 
-@keyframes scrollLeft {
-    0% {
-        transform: translateX(100%);
-    }
-    100% {
-        transform: translateX(-100%);
-    }
-}
 
 </style>

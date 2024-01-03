@@ -29,7 +29,11 @@ import { RouterLink } from 'vue-router';
                         <ul class="icon_list">
                             <li class="icon_item">
                                 <RouterLink :to="`#`" class="icon_link">
-                                    <iconUser />
+                                    <div style="  width: 40px; height: 40px; border-radius: 50%; border: 2px solid #000; display: flex; align-items: center; justify-content: center;">
+                                        <iconUser/>
+                                        <img src="" alt="" >
+                                    </div>
+                                   
                                 </RouterLink>
                                 <ul class="submenu">
                                     <li>
@@ -37,7 +41,9 @@ import { RouterLink } from 'vue-router';
                                     </li>
                                     <li>
                                         <p>Déjà un compte? <RouterLink :to="`#`" class="submenu_link">Se connecter</RouterLink> </p>
-
+                                    </li>
+                                    <li>
+                                        <p> <RouterLink :to="`#`" class="submenu_link">Mon compte</RouterLink>  </p>
                                     </li>
                                 </ul>
                             </li>
