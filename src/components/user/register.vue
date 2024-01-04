@@ -57,7 +57,7 @@ const createUser = async () => {
                
                 <div class="register_c">
                     <div style="display: flex; align-items: center; justify-content: center;">
-                        <h2 style="color: #FF0019; font-weight: 900;">Inscrivez-vous ici</h2>
+                        <h2 style="color: rgb(114, 108, 108); font-weight: 900;">Inscrivez-vous ici</h2>
                     </div>
                     <div class="register_content">
                         <div class="register_content_left">

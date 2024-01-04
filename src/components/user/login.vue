@@ -20,12 +20,12 @@ const login = async () => {
         };
 
         const response = await clientHttp.post('http://localhost:8000/api/user/login', user);
-        
-        console.log('Réponse du backend :', response.data);
 
         const token = response.data.token
-
         localStorage.setItem("token",JSON.stringify(token));
+
+        const user_data = response.data.user
+        localStorage.setItem("user", JSON.stringify(user_data));
 
         successMessage.value = 'Connection réussie';
         error.value = '';
@@ -57,7 +57,7 @@ const login = async () => {
 
                     <div class="login_c">
                         <div style="display: flex; align-items: center; justify-content: center;">
-                            <h2 style="color: #FF0019; font-weight: 900;">Connectez-vous ici</h2>
+                            <h2 style="color: rgb(114, 108, 108); font-weight: 900;">Connectez-vous ici</h2>
                         </div>
                         <div class="register_content">
                             <div class="register_content_left">
