@@ -8,7 +8,6 @@ const error = ref('');
 const successMessage = ref('');
 const user = ref(null);
 
-
 const getUser = async () => {
     try {
         const token = JSON.parse(localStorage.getItem("token")!);
@@ -19,7 +18,8 @@ const getUser = async () => {
             }
         });
         user.value = response.data;
-        console.log(user.value);
+        
+        console.log("user_with_file", user.value);
 
     } catch (err) {
         console.error("Erreur lors de la récupération de l'utilisateur", err);
@@ -32,7 +32,7 @@ const getUser = async () => {
 
 
 onMounted(() => {
-    getUser(); 
+    getUser();
 });
 
 </script>
@@ -51,13 +51,15 @@ onMounted(() => {
                         <div style="display: flex; align-items: center; justify-content: center;">
                             <h2 style="color: rgb(114, 108, 108); font-weight: 900;">Mon compte</h2>
                         </div>
-                        <div class="myAccount_content" v-for="user_data in user">
+                        <div class="myAccount_content" v-for="(user_data, key) in user" :key="key">
                             <div class="profile-photo">
                                 <div>
                                     <strong>Photo de profil :</strong>
+                                  
                                 </div>
                                 <div style="width: 150px; height: 150px;">
-                                    <img :src="user_data.picture" alt="Pas de photo, veuillez modifier votre compte pour choisir une photo de profil" style="width: 100%; object-fit: cover;">
+                                    <img :scr="'/storage'+ user_data.picture" alt="Pas de photo, veuillez modifier votre compte pour choisir une photo de profil"
+                                        style="width: 100%; object-fit: cover;">
                                 </div>
                             </div>
                             <div class="user-details">
@@ -72,7 +74,7 @@ onMounted(() => {
                                 </div>
                                 <div class="">
                                     <p><strong>Email :</strong> {{ user_data.email }}</p>
-                                </div>  
+                                </div>
                             </div>
                         </div>
                         <div class="myAccount_crud">

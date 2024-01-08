@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import navbar from "@/components/navbar.vue";
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import clientHttp from "@/libs/clientHttp";
 import { useRouter } from 'vue-router';
 const router = useRouter();
@@ -32,7 +32,9 @@ const createUser = async () => {
 
         successMessage.value = 'Inscription réussie';
         error.value = '';
+
         router.replace('/verifyCode');
+
     } catch (err) {
         console.error('Je suis pas connecté au backend :', err);
 
@@ -40,6 +42,10 @@ const createUser = async () => {
         error.value = 'Erreur lors de la création de l\'utilisateur';
     }
 };
+
+onMounted(()=>{
+    
+})
 
 </script>
 
