@@ -3,11 +3,15 @@ import navbar from '../navbar.vue';
 import { ref, onMounted } from 'vue';
 import clientHttp from "@/libs/clientHttp";
 import { RouterLink } from 'vue-router';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 const error = ref('');
 const successMessage = ref('');
 const user = ref(null);
 
+//afficher l'utilisateur connecté
 const getUser = async () => {
     try {
         const token = JSON.parse(localStorage.getItem("token")!);
@@ -28,11 +32,44 @@ const getUser = async () => {
     }
 };
 
+//Déconnection de l'utilisateur
 
+const logout = async () => {
+    try {
+        const token = JSON.parse(localStorage.getItem("token")!);
+        const response = await clientHttp.post("http://localhost:8000/api/user/logout", null, {
+            headers: {
+                Authorization: "Bearer " + token
+            }
+        });
+        console.log("message de déconnexion :", response.data);
+        router.replace('/');
+    } catch (err) {
+        console.error("Erreur lors de la déconnexion de l'utilisateur", err);
+    }
+};
+
+//supprimer mon compte
+
+const deleteUser = async () => {
+    try {
+        const token = JSON.parse(localStorage.getItem("token")!);
+        const response = await clientHttp.delete("http://localhost:8000/api/user/delete",  {
+            headers: {
+                Authorization: "Bearer " + token
+            }
+        });
+        console.log("message de suppression :", response.data);
+        router.replace('/');
+    } catch (err) {
+        console.error("Erreur lors de la suppression de l'utilisateur", err);
+    }
+};
 
 
 onMounted(() => {
     getUser();
+
 });
 
 </script>
@@ -82,10 +119,10 @@ onMounted(() => {
                                 <RouterLink :to="`/edit_user`" class=" btn btn-success crud_edit">Modifier</RouterLink>
                             </div>
                             <div>
-                                <RouterLink :to="`#`" class=" btn btn-danger crud_delete">Supprimer</RouterLink>
+                                <button type="submit" class="btn btn-primary crud_disconnect" @click="logout">Déconnecter</button>
                             </div>
                             <div>
-                                <RouterLink :to="`#`" class=" btn btn-primary crud_disconnect">Déconnecter</RouterLink>
+                                <button type="submit" class="btn btn-danger crud_delete" @click="deleteUser">Supprimer</button>
                             </div>
                         </div>
                     </div>

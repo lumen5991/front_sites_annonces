@@ -76,6 +76,9 @@ const login = async () => {
                                 <div class="" style="text-align: right;">
                                     <button type="submit" class="btn btn-secondary" translate="no">Valider</button>
                                 </div>
+                                <div class="mt-2">
+                                    <p style="color:red;">Mot de passe oubliez? <span> <RouterLink :to="`/forget_password`"> CLIQUEZ ICI </RouterLink> </span></p>
+                                </div>
                             </div>
                         </div>
 

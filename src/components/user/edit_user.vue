@@ -27,6 +27,8 @@ const onFilePicture = (e: Event) => {
     console.log("userImage", picture.value)
 };
 
+//Mettre à jour l'utilisateur
+
 const updateUser = async () => {
     try {
 

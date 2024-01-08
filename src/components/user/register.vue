@@ -39,7 +39,7 @@ const createUser = async () => {
         console.error('Je suis pas connecté au backend :', err);
 
         successMessage.value = '';
-        error.value = 'Erreur lors de la création de l\'utilisateur';
+        error.value = "Erreur lors de la création de l'utilisateur, l'email ou le nom d'utilisateur existe déjà";
     }
 };
 
