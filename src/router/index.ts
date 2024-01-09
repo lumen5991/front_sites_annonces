@@ -49,7 +49,8 @@ const router = createRouter({
       path :'/forget_password',
       name : 'forget_password',
       component: Forget_password
-    }
+    },
+
   ]
 })
 

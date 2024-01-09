@@ -12,7 +12,6 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import 'bootstrap/dist/js/bootstrap.bundle'
 import 'animate.css';
 
-
 const app = createApp(App)
 
 app.use(createPinia())

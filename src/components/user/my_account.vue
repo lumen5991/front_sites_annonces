@@ -9,7 +9,7 @@ const router = useRouter();
 
 const error = ref('');
 const successMessage = ref('');
-const user = ref(null);
+const user = ref<any>();
 
 //afficher l'utilisateur connecté
 const getUser = async () => {
@@ -21,8 +21,8 @@ const getUser = async () => {
                 Authorization: 'Bearer ' + token!
             }
         });
-        user.value = response.data;
-        
+        user.value = response.data.user;
+
         console.log("user_with_file", user.value);
 
     } catch (err) {
@@ -54,7 +54,7 @@ const logout = async () => {
 const deleteUser = async () => {
     try {
         const token = JSON.parse(localStorage.getItem("token")!);
-        const response = await clientHttp.delete("http://localhost:8000/api/user/delete",  {
+        const response = await clientHttp.delete("http://localhost:8000/api/user/delete", {
             headers: {
                 Authorization: "Bearer " + token
             }
@@ -88,41 +88,84 @@ onMounted(() => {
                         <div style="display: flex; align-items: center; justify-content: center;">
                             <h2 style="color: rgb(114, 108, 108); font-weight: 900;">Mon compte</h2>
                         </div>
-                        <div class="myAccount_content" v-for="(user_data, key) in user" :key="key">
+                        <div class="myAccount_content" v-if="user != undefined" >
                             <div class="profile-photo">
                                 <div>
                                     <strong>Photo de profil :</strong>
-                                  
+
                                 </div>
                                 <div style="width: 150px; height: 150px;">
-                                    <img :scr="'/storage'+ user_data.picture" alt="Pas de photo, veuillez modifier votre compte pour choisir une photo de profil"
-                                        style="width: 100%; object-fit: cover;">
+                                    <img :src="user.picture"
+                                        alt="Pas de photo, veuillez modifier votre compte pour choisir une photo de profil"
+                                        style="width: 100%; height: 100%; object-fit:contain;">
                                 </div>
                             </div>
                             <div class="user-details">
                                 <div class="">
-                                    <p><strong>Nom de famille :</strong> {{ user_data.lastname }}</p>
+                                    <p><strong>Nom de famille :</strong> {{ user.lastname }}</p>
                                 </div>
                                 <div class="">
-                                    <p><strong>Prénoms :</strong> {{ user_data.firstname }}</p>
+                                    <p><strong>Prénoms :</strong> {{ user.firstname }}</p>
                                 </div>
                                 <div class="">
-                                    <p><strong>Nom d'utilisateur :</strong> {{ user_data.username }}</p>
+                                    <p><strong>Nom d'utilisateur :</strong> {{ user.username }}</p>
                                 </div>
                                 <div class="">
-                                    <p><strong>Email :</strong> {{ user_data.email }}</p>
+                                    <p><strong>Email :</strong> {{ user.email }}</p>
                                 </div>
                             </div>
                         </div>
                         <div class="myAccount_crud">
                             <div>
-                                <RouterLink :to="`/edit_user`" class=" btn btn-success crud_edit">Modifier</RouterLink>
+                                <RouterLink :to="`/edit_user`" class=" btn btn-success ">Modifier</RouterLink>
                             </div>
                             <div>
-                                <button type="submit" class="btn btn-primary crud_disconnect" @click="logout">Déconnecter</button>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#logoutModal">Déconnecter</button>
+                                <div id="logoutModal" class="modal fade" tabindex="-1" aria-labelledby="logoutModalLabel"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="logoutModalLabel">Confirmation</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Êtes-vous sûr de vouloir vous déconnecter ?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Non</button>
+                                                <button type="button" class="btn btn-primary" @click="logout">Oui</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div>
-                                <button type="submit" class="btn btn-danger crud_delete" @click="deleteUser">Supprimer</button>
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#logoutModal">Supprimer</button>
+                                <div id="logoutModal" class="modal fade" tabindex="-1" aria-labelledby="logoutModalLabel"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="logoutModalLabel">Confirmation</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Êtes-vous sûr de vouloir supprimer votre compte ?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Non</button>
+                                                <button type="button" class="btn btn-primary" @click="deleteUser">Oui</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
