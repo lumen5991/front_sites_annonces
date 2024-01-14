@@ -2,9 +2,7 @@
 import navbar from '../navbar.vue';
 import { ref, onMounted } from 'vue';
 import clientHttp from "@/libs/clientHttp";
-import { RouterLink } from 'vue-router';
-import { useRouter } from 'vue-router';
-
+import { RouterLink, useRouter } from 'vue-router';
 const router = useRouter();
 
 const error = ref('');

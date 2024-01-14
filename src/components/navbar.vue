@@ -19,12 +19,17 @@ import { RouterLink } from 'vue-router';
                     </form>
                 </div>
                 <div class="add_announce">
-                    <a href="" class="send_annonce">
+                    <!--   <a href="" class="send_annonce">
+                       
+                    </a> -->
+
+
+                    <RouterLink :to="`/add_announce`" class="send_annonce">
                         <span id="plus">+</span> <span>Déposer une annonce</span>
-                    </a>
+                    </RouterLink>
                 </div>
                 <div>
-                    
+
                 </div>
 
 
@@ -33,21 +38,28 @@ import { RouterLink } from 'vue-router';
                         <ul class="icon_list">
                             <li class="icon_item">
                                 <RouterLink :to="`#`" class="icon_link">
-                                    <div style="  width: 40px; height: 40px; border-radius: 50%; border: 2px solid #000; display: flex; align-items: center; justify-content: center;">
-                                        <iconUser/>
-                                        <img src="" alt="" >
+                                    <div
+                                        style="  width: 40px; height: 40px; border-radius: 50%; border: 2px solid #000; display: flex; align-items: center; justify-content: center;">
+                                        <iconUser />
+                                        <img src="" alt="">
                                     </div>
-                                   
+
                                 </RouterLink>
                                 <ul class="submenu">
                                     <li>
-                                        <p>Pas de compte? <RouterLink :to="`/register`" class="submenu_link">S'inscrire</RouterLink> </p>
+                                        <p>Pas de compte? <RouterLink :to="`/register`" class="submenu_link">S'inscrire
+                                            </RouterLink>
+                                        </p>
                                     </li>
                                     <li>
-                                        <p>Déjà un compte? <RouterLink :to="`/login`" class="submenu_link">Se connecter</RouterLink> </p>
+                                        <p>Déjà un compte? <RouterLink :to="`/login`" class="submenu_link">Se connecter
+                                            </RouterLink>
+                                        </p>
                                     </li>
                                     <li>
-                                        <p> <RouterLink :to="`/my_account`" class="submenu_link">Mon compte</RouterLink>  </p>
+                                        <p>
+                                            <RouterLink :to="`/my_account`" class="submenu_link">Mon compte</RouterLink>
+                                        </p>
                                     </li>
                                 </ul>
                             </li>
@@ -55,8 +67,7 @@ import { RouterLink } from 'vue-router';
                     </div>
                 </div>
             </div>
-        </nav>
-    </div>
-</template>
+    </nav>
+</div></template>
 
 <style scoped></style>

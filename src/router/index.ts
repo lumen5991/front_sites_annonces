@@ -6,6 +6,8 @@ import Login from '@/views/user/Login.vue'
 import My_account from '@/views/user/My_account.vue'
 import Edit_user from '@/views/user/Edit_user.vue'
 import Forget_password from '@/views/user/Forget_password.vue'
+import Edit_category from '@/views/category/Edit_category.vue'
+import Add_announce from "@/views/announce/Add_announce.vue"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -50,6 +52,19 @@ const router = createRouter({
       name : 'forget_password',
       component: Forget_password
     },
+
+    {
+      path: '/edit_category/:id',
+      name: 'edit_category',
+      component: Edit_category
+    },
+    
+    {
+      path: '/add_announce',
+      name: 'add_announce',
+      component: Add_announce
+    },
+    
 
   ]
 })

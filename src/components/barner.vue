@@ -46,7 +46,7 @@
 .barner_title h2 {
   
     position: relative;
-    font-size: 45px;
+    font-size: 40px;
     color: var(--logo-bg-color);
     font-weight: bolder;
     letter-spacing: 3px;
@@ -54,9 +54,9 @@
 
 }
 
-@media screen and (max-width:900px) {
+@media screen and (max-width:1100px) {
     .barner_title h2 {
-    font-size: 25px;
+    font-size: 20px;
     letter-spacing: 1px;
 }
   
