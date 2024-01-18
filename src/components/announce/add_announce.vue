@@ -1,27 +1,31 @@
 <script setup lang="ts">
-import navbar from "@/components/navbar.vue";
 import { ref, onMounted } from 'vue';
 import clientHttp from "@/libs/clientHttp";
+
 import { useRouter } from 'vue-router';
+
 
 const router = useRouter();
 
 const title = ref('');
 const body = ref('');
 const category = ref('');
-const pictures = ref();
+const pictures = ref(); 
 
 const error = ref('');
 const successMessage = ref('');
 
-const categories = ref([]);
+const categories = ref();
 
 const onFilePicture = (e: Event) => {
     const target = e.target as HTMLInputElement;
     if (target.files) {
-        pictures.value = target.files[0];
+        for(let i = 0; i<target.files.length; i++){
+            console.log(target.files[i])
+        }
+        pictures.value = target.files;
+        console.log("images", pictures.value);
     }
-    console.log("images", pictures.value);
 };
 
 const addAnnounce = async () => {
@@ -30,11 +34,19 @@ const addAnnounce = async () => {
         formData.append("title", title.value);
         formData.append("body", body.value);
         formData.append("category", category.value);
-        formData.append("pictures[]", pictures.value);
+
+        if (pictures.value) {
+            console.log(pictures.value)
+            for (let i = 0; i < pictures.value.length; i++) {
+                formData.append("pictures[]", pictures.value[i]);
+
+            }
+        } 
 
         const token = JSON.parse(localStorage.getItem("token")!);
         console.log('token_user', token);
-
+        console.log(formData)
+        
         const response = await clientHttp.post('http://localhost:8000/api/announce/add', formData, {
             headers: {
                 Authorization: 'Bearer ' + token!,
@@ -45,7 +57,12 @@ const addAnnounce = async () => {
         console.log(response);
         successMessage.value = "Ajout de l'annonce fait avec succès";
         error.value = '';
-        router.replace('/add_announce');
+        title.value ="",
+        body.value = "",
+        category.value="",
+        pictures.value=""
+   
+        router.replace('/');
     } catch (err) {
         console.error('Je ne suis pas connecté au backend :', err);
         successMessage.value = '';
@@ -104,7 +121,7 @@ onMounted(async () => {
                                 <div>
                                     Choisir des images
                                 </div>
-                                <input type="file" @change="onFilePicture" name="pictures" id="pictures">
+                                <input type="file" @change="onFilePicture" id="files" name="files" multiple>
                             </div>
                             <div class="" style="text-align: right;">
                                 <button type="submit" class="btn btn-secondary" translate="no">Valider</button>
@@ -117,4 +134,5 @@ onMounted(async () => {
     </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+</style>

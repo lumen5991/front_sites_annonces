@@ -59,7 +59,7 @@ const edit_category = async () => {
     } catch (err) {
         console.error('je ne suis pas connecté au backend :', err);
         successMessage.value = '';
-        error.value = "Erreur lors de la modification de la catégorie";
+        error.value = "Vous n'êtes pas autoriser à modifier cette catégorie";
     }
 }
 

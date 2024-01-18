@@ -30,22 +30,6 @@ const getUser = async () => {
     }
 };
 
-//Déconnection de l'utilisateur
-
-const logout = async () => {
-    try {
-        const token = JSON.parse(localStorage.getItem("token")!);
-        const response = await clientHttp.post("http://localhost:8000/api/user/logout", null, {
-            headers: {
-                Authorization: "Bearer " + token
-            }
-        });
-        console.log("message de déconnexion :", response.data);
-        router.replace('/');
-    } catch (err) {
-        console.error("Erreur lors de la déconnexion de l'utilisateur", err);
-    }
-};
 
 //supprimer mon compte
 
@@ -58,6 +42,7 @@ const deleteUser = async () => {
             }
         });
         console.log("message de suppression :", response.data);
+        localStorage.removeItem("token");
         router.replace('/');
     } catch (err) {
         console.error("Erreur lors de la suppression de l'utilisateur", err);
@@ -113,33 +98,9 @@ onMounted(() => {
                                 </div>
                             </div>
                         </div>
-                        <div class="myAccount_crud">
+                        <div class="myAccount_crud" style="margin-top: 20px;">
                             <div>
                                 <RouterLink :to="`/edit_user`" class=" btn btn-success ">Modifier</RouterLink>
-                            </div>
-                            <div>
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                    data-bs-target="#logoutModal">Déconnecter</button>
-                                <div id="logoutModal" class="modal fade" tabindex="-1" aria-labelledby="logoutModalLabel"
-                                    aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="logoutModalLabel">Confirmation</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                Êtes-vous sûr de vouloir vous déconnecter ?
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Non</button>
-                                                <button type="button" class="btn btn-primary" @click="logout">Oui</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                             <div>
                                 <button type="button" class="btn btn-danger" data-bs-toggle="modal"
