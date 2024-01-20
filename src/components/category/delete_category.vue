@@ -2,11 +2,12 @@
 import deleteIcon from "@/components/icons/deleteIcon.vue";
 import { ref } from 'vue';
 import clientHttp from "@/libs/clientHttp";
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
-const props = defineProps(['categoryId']);
+const route = useRoute();
+const router = useRouter()
 
-const router = useRouter();
+const categoryId = route.params.id;
 
 const error = ref("");
 const successMessage = ref("");
@@ -14,13 +15,14 @@ const successMessage = ref("");
 const deleteCategory = async () => {
     try {
         const token = JSON.parse(localStorage.getItem("token")!);
-        const response = await clientHttp.delete(`http://localhost:8000/api/category/delete/${props.categoryId}`, {
+        const response = await clientHttp.delete(`http://localhost:8000/api/category/delete/${categoryId}`, {
             headers: {
                 Authorization: 'Bearer ' + token!,
             }
         });
         console.log("message de suppression :", response.data);
         successMessage.value = "Catégorie supprimée avec succès !";
+
         router.replace('/');
     } catch (err) {
         console.error("Erreur lors de la suppression de la catégorie", err);
@@ -43,6 +45,7 @@ const deleteCategory = async () => {
                     <div v-if="successMessage" class="alert alert-success">{{ successMessage }}</div>
 
                     <div class="modal-header">
+
                         <h5 class="modal-title" id="deleteModalLabel">Confirmation de suppression</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>

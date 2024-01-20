@@ -25,7 +25,7 @@ const login = async () => {
         localStorage.setItem("token",JSON.stringify(token));
 
         const user_data = response.data.user
-        localStorage.setItem("user", JSON.stringify(user_data));
+        localStorage.setItem("user", JSON.stringify(user_data)); 
 
         successMessage.value = 'Connection réussie';
         error.value = '';
@@ -79,6 +79,11 @@ const login = async () => {
                                 <div class="mt-2">
                                     <p style="color:red;">Mot de passe oubliez? <span> <RouterLink :to="`/forget_password`"> CLIQUEZ ICI </RouterLink> </span></p>
                                 </div>
+                                <div class="mt-2">
+                                    <p style="color:red;">Pas de compte? <span> <RouterLink :to="`/register`"> S'INSCRIRE </RouterLink> </span></p>
+                                </div>
+                                
+
                             </div>
                         </div>
 

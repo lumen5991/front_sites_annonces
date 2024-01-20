@@ -1,6 +1,55 @@
 <script setup lang="ts">
+import { ref, onMounted } from "vue"
 import iconUser from "../components/icons/user.vue";
-import { RouterLink } from 'vue-router';
+import { RouterLink, useRouter } from 'vue-router';
+import clientHttp from "@/libs/clientHttp";
+
+const router = useRouter();
+
+const remove = ref(false);
+const disconnect = ref(false)
+
+const token = JSON.parse(localStorage.getItem("token")!);
+
+const logout = async () => {
+    try {
+       
+        const response = await clientHttp.post("http://localhost:8000/api/user/logout", null, {
+            headers: {
+                Authorization: "Bearer " + token
+            }
+        });
+        console.log("message de déconnexion :", response.data);
+        localStorage.removeItem("token");
+        localStorage.removeItem("user")
+        localStorage.removeItem("userEmail")
+        router.replace("/login")
+
+    } catch (err) {
+        console.error("Erreur lors de la déconnexion de l'utilisateur", err);
+    }
+};
+
+
+
+onMounted(() => {
+    if (token) {
+        remove.value = true;
+        disconnect.value = false
+    }
+    else{
+        remove.value = false
+        disconnect.value = true
+    }
+
+
+    
+})
+
+
+
+
+
 
 </script>
 
@@ -19,10 +68,6 @@ import { RouterLink } from 'vue-router';
                     </form>
                 </div>
                 <div class="add_announce">
-                    <!--   <a href="" class="send_annonce">
-                       
-                    </a> -->
-
 
                     <RouterLink :to="`/add_announce`" class="send_annonce">
                         <span id="plus">+</span> <span>Déposer une annonce</span>
@@ -46,28 +91,38 @@ import { RouterLink } from 'vue-router';
 
                                 </RouterLink>
                                 <ul class="submenu">
-                                    <li>
+                                    <li class="remove_link" v-show="!remove">
                                         <p>Pas de compte? <RouterLink :to="`/register`" class="submenu_link">S'inscrire
                                             </RouterLink>
                                         </p>
                                     </li>
-                                    <li>
+                                    <li class="remove_link" v-show="!remove">
                                         <p>Déjà un compte? <RouterLink :to="`/login`" class="submenu_link">Se connecter
                                             </RouterLink>
                                         </p>
                                     </li>
-                                    <li>
+                                    <li v-show="!disconnect">
                                         <p>
                                             <RouterLink :to="`/my_account`" class="submenu_link">Mon compte</RouterLink>
                                         </p>
                                     </li>
+                                    <li v-show="!disconnect" class="">
+                                        
+                                        <button class="btn submenu_link"  @click="logout">Se Déconnecter</button>
+                                        
+                                    </li>
+                                    
                                 </ul>
                             </li>
                         </ul>
+                        
                     </div>
                 </div>
             </div>
-    </nav>
-</div></template>
+        </nav>
+    </div>
+</template>
 
-<style scoped></style>
+<style scoped>
+    
+</style>

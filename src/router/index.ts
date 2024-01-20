@@ -8,6 +8,12 @@ import Edit_user from '@/views/user/Edit_user.vue'
 import Forget_password from '@/views/user/Forget_password.vue'
 import Edit_category from '@/views/category/Edit_category.vue'
 import Add_announce from "@/views/announce/Add_announce.vue"
+import Edit_announce from "@/views/announce/Edit_announce.vue"
+
+const isAuthenticated = () => {
+  return localStorage.getItem('token');
+};
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,31 +26,54 @@ const router = createRouter({
     {
       path: '/register',
       name: 'register',
-      component: Register
+      component: Register,
+      beforeEnter: (to, from, next) => {
+        if (!isAuthenticated()) {
+          next();
+        } else {
+          next('/');
+        }
+      },
     }, 
 
     {
       path: '/verifyCode',
       name: 'verifyCode',
-      component: Verify
+      component: Verify,
+      beforeEnter: (to, from, next) => {
+        if (!isAuthenticated()) {
+          next();
+        } else {
+          next('/');
+        }
+      },
     }, 
 
     {
       path: '/login',
       name: 'login',
-      component: Login
+      component: Login,
+      beforeEnter: (to, from, next) => {
+        if (!isAuthenticated()) {
+          next();
+        } else {
+          next('/');
+        }
+      },
     },
 
     {
       path: '/my_account',
       name: 'my_account',
-      component: My_account
+      component: My_account, 
+      meta: { requiresAuth: true } 
     },
 
     {
       path: '/edit_user',
       name: 'edit_user',
-      component: Edit_user
+      component: Edit_user,
+      meta: { requiresAuth: true } 
     },
 
     {
@@ -56,14 +85,27 @@ const router = createRouter({
     {
       path: '/edit_category/:id',
       name: 'edit_category',
-      component: Edit_category
+      component: Edit_category,
+      meta: { requiresAuth: true } 
     },
     
     {
       path: '/add_announce',
       name: 'add_announce',
-      component: Add_announce
+      component: Add_announce,
+      meta: { requiresAuth: true } 
     },
+
+    {
+      path: '/edit_announce/:id',
+      name: 'edit_announce',
+      component: Edit_announce,
+      meta: { requiresAuth: true } 
+    },
+
+    
+
+
     
 
   ]
