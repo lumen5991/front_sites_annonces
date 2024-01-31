@@ -23,6 +23,7 @@ const logout = async () => {
         localStorage.removeItem("token");
         localStorage.removeItem("user")
         localStorage.removeItem("userEmail")
+        localStorage.removeItem("roles")
         router.replace("/login")
 
     } catch (err) {
@@ -69,8 +70,10 @@ onMounted(() => {
                 </div>
                 <div class="add_announce">
 
-                    <RouterLink :to="`/add_announce`" class="send_annonce">
-                        <span id="plus">+</span> <span>Déposer une annonce</span>
+                    <RouterLink :to="`/announcement`" class="send_annonce">
+                       <!--  <span id="plus">+</span> <span>Déposer une annonce</span> -->
+                       <span>Accéder aux annonces</span>
+                       
                     </RouterLink>
                 </div>
                 <div>

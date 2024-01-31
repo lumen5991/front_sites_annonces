@@ -5,11 +5,10 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter()
 
-const name = ref("")
-const description = ref("")
-const error = ref("")
-const successMessage = ref("")
-
+const name = ref("");
+const description = ref("");
+const error = ref("");
+const successMessage = ref("");
 
 const getAllCategory = async () => {
     try {
@@ -20,9 +19,7 @@ const getAllCategory = async () => {
                 Authorization: 'Bearer ' + token!
             }
         });
-    }
-
-    catch (err) {
+    } catch (err) {
         console.error("Erreur lors de la récupération de l'utilisateur", err);
         successMessage.value = '';
         error.value = "Vous n'êtes pas connecté";
@@ -30,9 +27,7 @@ const getAllCategory = async () => {
 }
 
 const add_category = async () => {
-
     try {
-
         const token = JSON.parse(localStorage.getItem("token")!);
 
         const category = {
@@ -44,49 +39,46 @@ const add_category = async () => {
             headers: {
                 Authorization: 'Bearer ' + token!,
             }
-        })
+        });
 
-        console.log(response.data)
-
-        successMessage.value = 'Catégorie ajoutée avec succès';
-        error.value = '';
-        name.value = ''
-        description.value = ''
-       /* router.replace('/'); */
-        window.location.reload() 
-       
-        /* getAllCategory() */
-    }
-    catch (err) {
-        console.error('Je suis pas connecté au backend :', err);
-
+        if (response.data.error) {
+            error.value = response.data.message;
+            successMessage.value = '';
+        } else {
+            successMessage.value = response.data.message;
+            error.value = '';
+            name.value = '';
+            description.value = '';
+            window.location.reload(); 
+        }
+    } catch (err) {
+        console.error('Erreur catch:', err);
         successMessage.value = '';
         error.value = "Erreur lors de l'ajout de la catégorie";
     }
-
-    onMounted(()=>{
-        getAllCategory()
-
-    }) 
 }
 
+
+onMounted(() => {
+    getAllCategory()
+})
 </script>
+
 <template>
     <main>
         <div class="category">
-            <button type="button" class="button-53 category_link" data-bs-toggle="modal"
-                data-bs-target="#logoutModal">Ajouter une catégorie</button>
+            <button type="button" class="button-53 category_link" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                Ajouter une catégorie
+            </button>
             <div id="logoutModal" class="modal fade" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
-
                     <div class="modal-content">
-
                         <div class="modal-header">
                             <h5 class="modal-title" id="logoutModalLabel">Ajouter une catégorie</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <div v-if="error" class="alert alert-danger">{{ error }}</div>
+                            <div v-if="error" class="alert alert-danger">{{error}}</div>
                             <div v-if="successMessage" class="alert alert-success">{{ successMessage }}</div>
                             <div>
                                 <div>
@@ -101,8 +93,7 @@ const add_category = async () => {
                                     <h6>Description</h6>
                                 </div>
                                 <div>
-                                    <textarea name="description" v-model="description" class="form-control" id="" cols="30"
-                                        rows="8"></textarea>
+                                    <textarea name="description" v-model="description" class="form-control" id="" cols="30" rows="8"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -113,11 +104,10 @@ const add_category = async () => {
                     </div>
                 </div>
             </div>
-
         </div>
-
     </main>
 </template>
+
 <style scoped>
 .category {
     margin: 20px 30px;
@@ -125,7 +115,6 @@ const add_category = async () => {
 
 .category_link {
     display: flex !important;
-    ;
     align-items: center !important;
     justify-content: right !important;
 }

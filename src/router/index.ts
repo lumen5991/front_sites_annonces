@@ -1,27 +1,35 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import Home from '@/views/Home.vue'
-import Register from '@/views/user/Register.vue'
-import Verify from '@/views/user/VerifyCode.vue'
-import Login from '@/views/user/Login.vue'
-import My_account from '@/views/user/My_account.vue'
-import Edit_user from '@/views/user/Edit_user.vue'
-import Forget_password from '@/views/user/Forget_password.vue'
-import Edit_category from '@/views/category/Edit_category.vue'
-import Add_announce from "@/views/announce/Add_announce.vue"
-import Edit_announce from "@/views/announce/Edit_announce.vue"
+import { createRouter, createWebHistory } from 'vue-router';
+import Admin from '@/views/Admin.vue';
+import Register from '@/views/user/Register.vue';
+import Verify from '@/views/user/VerifyCode.vue';
+import Login from '@/views/user/Login.vue';
+import My_account from '@/views/user/My_account.vue';
+import Edit_user from '@/views/user/Edit_user.vue';
+import Forget_password from '@/views/user/Forget_password.vue';
+import Edit_category from '@/views/category/Edit_category.vue';
+import Add_announce from "@/views/announce/Add_announce.vue";
+import Edit_announce from "@/views/announce/Edit_announce.vue";
+import Announce from "@/views/announce/Announce.vue";
 
 const isAuthenticated = () => {
   return localStorage.getItem('token');
 };
 
+const userRoles = JSON.parse(localStorage.getItem('roles') || '[]');
+
+const isAdmin = () => {
+  const expectedRole = 'admin';
+
+  return userRoles.includes(expectedRole);
+};
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: Home
+      name: 'announcement',
+      component: Announce
     }, 
     {
       path: '/register',
@@ -35,7 +43,6 @@ const router = createRouter({
         }
       },
     }, 
-
     {
       path: '/verifyCode',
       name: 'verifyCode',
@@ -48,7 +55,6 @@ const router = createRouter({
         }
       },
     }, 
-
     {
       path: '/login',
       name: 'login',
@@ -61,54 +67,61 @@ const router = createRouter({
         }
       },
     },
-
     {
       path: '/my_account',
       name: 'my_account',
       component: My_account, 
       meta: { requiresAuth: true } 
     },
-
     {
       path: '/edit_user',
       name: 'edit_user',
       component: Edit_user,
       meta: { requiresAuth: true } 
     },
-
     {
       path :'/forget_password',
       name : 'forget_password',
       component: Forget_password
     },
-
     {
       path: '/edit_category/:id',
       name: 'edit_category',
       component: Edit_category,
-      meta: { requiresAuth: true } 
+      beforeEnter: (to, from, next) => {
+        if (isAdmin()) {
+          next();
+        } else {
+          next('/');
+        }
+      },
+      
     },
-    
     {
       path: '/add_announce',
       name: 'add_announce',
       component: Add_announce,
       meta: { requiresAuth: true } 
     },
-
+    {
+      path: '/admin',
+      name: 'admin',
+      component: Admin,
+      beforeEnter: (to, from, next) => {
+        if (isAdmin()) {
+          next();
+        } else {
+          next('/');
+        }
+      },
+    },
     {
       path: '/edit_announce/:id',
       name: 'edit_announce',
       component: Edit_announce,
       meta: { requiresAuth: true } 
     },
-
-    
-
-
-    
-
   ]
-})
+});
 
-export default router
+export default router;

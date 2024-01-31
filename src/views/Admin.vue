@@ -3,8 +3,9 @@ import { onMounted } from "vue";
 import navbar from "@/components/navbar.vue";
 import barner from "@/components/barner.vue";
 import get_category from "@/components/category/get_category.vue"
-import get_announces from "@/components/announce/get_announces.vue"
+/* import get_announces from "@/components/announce/get_announces.vue" */
 import add_category from "@/components/category/add_category.vue"
+import get_users from "@/components/user/get_users.vue";
 
 
 
@@ -26,9 +27,8 @@ onMounted(()=>{
         <div class="category">
             <get_category />
         </div>
-
-        <div class="announcements">
-            <get_announces/>
+        <div>
+            <get_users/>
         </div>
 
     </main>

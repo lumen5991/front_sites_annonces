@@ -44,27 +44,34 @@ const edit_category = async () => {
             new_description: new_description.value
         }
 
-        const response = await clientHttp.put(`http://localhost:8000/api/category/edit/${categoryId}`, category, {
-            headers: {
-                Authorization: 'Bearer ' + token!,
-            }
-        });
+        const userRoles = JSON.parse(localStorage.getItem("roles")!);
 
-        console.log(response.data);
+        if (userRoles.includes('admin')) {
 
-        successMessage.value = 'Catégorie modifiée avec succès';
-        error.value = '';
-        router.replace('/')
-        
-    } catch (err) {
+
+            const response = await clientHttp.put(`http://localhost:8000/api/category/edit/${categoryId}`, category, {
+                headers: {
+                    Authorization: 'Bearer ' + token!,
+                }
+            });
+
+            console.log(response.data);
+
+            successMessage.value = 'Catégorie modifiée avec succès';
+            error.value = '';
+            router.replace('/admin')
+
+        }
+    }
+    catch (err) {
         console.error('je ne suis pas connecté au backend :', err);
         successMessage.value = '';
-        error.value = "Vous n'êtes pas autoriser à modifier cette catégorie";
+        error.value = "Erreur lors de la modification";
     }
 }
 
 onMounted(() => {
-    
+
     getIdCategory()
 
 });
@@ -77,10 +84,10 @@ onMounted(() => {
             <navbar />
         </div>
         <div class="container">
-           
+
             <div v-if="error" class="alert alert-danger">{{ error }}</div>
             <div v-if="successMessage" class="alert alert-success">{{ successMessage }}</div>
-            
+
             <div>
                 <div>
                     <h6>Nom de la catégorie</h6>
@@ -94,8 +101,8 @@ onMounted(() => {
                     <h6>Description</h6>
                 </div>
                 <div>
-                    <textarea name="description" v-model="new_description" :id="new_description" class="form-control" id="" cols="30"
-                        rows="8"></textarea>
+                    <textarea name="description" v-model="new_description" :id="new_description" class="form-control" id=""
+                        cols="30" rows="8"></textarea>
                 </div>
             </div>
 

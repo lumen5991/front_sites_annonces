@@ -56,11 +56,15 @@ const deleteAnnounceId = async (id) => {
         error.value = "Erreur lors de la suppression de l'annonce";
     }
 };
-
+const selectedAnnounce = ref()
+const getCurrentAnnounce = (announce: any)=>{
+     
+    selectedAnnounce.value = announce
+}
 
 //ajouter une note
 
-const addNote = async (id) => {
+const addNote = async (id:number) => {
     try {
         const noteAnnounce = {
             note: rating.value
@@ -80,6 +84,7 @@ const addNote = async (id) => {
     }
 };
 
+
 onMounted(() => {
     getAllAnnounce();
 });
@@ -90,12 +95,9 @@ onMounted(() => {
     <div>
         <div>
             <div class="container">
-                <div v-for="annonce in announcements" style="border: 1px solid gray;padding: 10px;" class="announce">
+                <div v-for="(annonce, index) in announcements" :key="index" style="border: 1px solid gray;padding: 10px;" class="announce">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <div style="width: 80%;">
-                            <div>
-                                {{ annonce.id }}
-                            </div>
                             <div>
                                 <p>Titre : <strong>{{ annonce.title }} </strong></p>
                             </div>
@@ -137,8 +139,8 @@ onMounted(() => {
                                 <label for="note">Attribuez une note:</label>
                                 <div style="display: flex; align-items: center; ">
                                     <div>
-                                        <span v-for="star in 5" :key="star" @click="rating = star"
-                                            :class="{ 'star-note': star <= rating }"
+                                        <span v-for="(star, i) in 5" :key="i" @click="getCurrentAnnounce(annonce), rating = star "
+                                            :class="{ 'star-note': star <= rating && selectedAnnounce.id === annonce.id}"
                                             style="font-size: 24px; cursor: pointer;">
                                             &#9733;
                                         </span>
