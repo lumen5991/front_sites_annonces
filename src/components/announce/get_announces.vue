@@ -9,7 +9,7 @@ import starIcon from '../icons/starIcon.vue'
 const error = ref("");
 const successMessage = ref("");
 const announcements = ref<any[]>();
-
+const averageAnnounce = ref(0);
 
 const rating = ref(0);
 
@@ -28,6 +28,13 @@ const getAllAnnounce = async () => {
         });
         announcements.value = response.data.announcements;
         console.log("images des annonces", announcements.value);
+
+        if (announcements.value) {
+            announcements.value.forEach(element => {
+                getAnnouncement(element.id);
+            });
+        }
+    
     } catch (err) {
         console.error("Erreur lors de l'affichage de l'annonce", err);
         successMessage.value = '';
@@ -37,7 +44,7 @@ const getAllAnnounce = async () => {
 
 // supprimer une annonce
 
-const deleteAnnounceId = async (id) => {
+const deleteAnnounceId = async (id: number) => {
 
     try {
 
@@ -57,14 +64,14 @@ const deleteAnnounceId = async (id) => {
     }
 };
 const selectedAnnounce = ref()
-const getCurrentAnnounce = (announce: any)=>{
-     
+const getCurrentAnnounce = (announce: any) => {
+
     selectedAnnounce.value = announce
 }
 
 //ajouter une note
 
-const addNote = async (id:number) => {
+const addNote = async (id: number) => {
     try {
         const noteAnnounce = {
             note: rating.value
@@ -84,9 +91,35 @@ const addNote = async (id:number) => {
     }
 };
 
+//moyenne des notes par annonce
+//Afficher tous les annonces
+
+ const getAnnouncement = async (id: number) => {
+   try {
+        const token = JSON.parse(localStorage.getItem("token")!);
+        const response = await clientHttp.get(`http://localhost:8000/api/announce/get/${id}`, {
+            headers: {
+                Authorization: 'Bearer ' + token!
+            }
+        });
+        
+        const notesAverages = response.data.moyenne;
+        averageAnnounce.value = notesAverages; 
+        
+        console.log("moy", averageAnnounce.value);
+        
+
+    }  catch (err) {
+        console.error("Erreur lors de l'affichage de l'annonce", err);
+        successMessage.value = '';
+        error.value = "Vous n'êtes pas connecté";
+    }
+}; 
+
 
 onMounted(() => {
     getAllAnnounce();
+   
 });
 
 </script>
@@ -95,7 +128,8 @@ onMounted(() => {
     <div>
         <div>
             <div class="container">
-                <div v-for="(annonce, index) in announcements" :key="index" style="border: 1px solid gray;padding: 10px;" class="announce">
+                <div v-for="(annonce, index) in announcements" :key="index" style="border: 1px solid gray;padding: 10px;"
+                    class="announce">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <div style="width: 80%;">
                             <div>
@@ -139,8 +173,9 @@ onMounted(() => {
                                 <label for="note">Attribuez une note:</label>
                                 <div style="display: flex; align-items: center; ">
                                     <div>
-                                        <span v-for="(star, i) in 5" :key="i" @click="getCurrentAnnounce(annonce), rating = star "
-                                            :class="{ 'star-note': star <= rating && selectedAnnounce.id === annonce.id}"
+                                        <span v-for="(star, i) in 5" :key="i"
+                                            @click="getCurrentAnnounce(annonce), rating = star"
+                                            :class="{ 'star-note': star <= rating && selectedAnnounce.id === annonce.id }"
                                             style="font-size: 24px; cursor: pointer;">
                                             &#9733;
                                         </span>
@@ -152,8 +187,13 @@ onMounted(() => {
                                 <div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
+                    <div >
+                        moyenne :  {{ averageAnnounce }}
+                    </div>
+
 
                 </div>
             </div>
