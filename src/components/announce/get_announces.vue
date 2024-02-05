@@ -3,38 +3,23 @@ import { ref, onMounted } from 'vue';
 import clientHttp from "@/libs/clientHttp";
 import editIcon from '../icons/editIcon.vue';
 import deleteIcon from '../icons/deleteIcon.vue';
-import starIcon from '../icons/starIcon.vue'
 
 
 const error = ref("");
 const successMessage = ref("");
 const announcements = ref<any[]>();
-const averageAnnounce = ref(0);
-
+const moyennes = ref<any>({});
 const rating = ref(0);
 
 const token = JSON.parse(localStorage.getItem("token")!);
 
-//Afficher tous les annonces
-
 const getAllAnnounce = async () => {
     try {
-        const token = JSON.parse(localStorage.getItem("token")!);
-        console.log('token_user', token);
-        const response = await clientHttp.get('http://localhost:8000/api/announce/getAll', {
-            headers: {
-                Authorization: 'Bearer ' + token!
-            }
-        });
-        announcements.value = response.data.announcements;
-        console.log("images des annonces", announcements.value);
 
-        if (announcements.value) {
-            announcements.value.forEach(element => {
-                getAnnouncement(element.id);
-            });
-        }
-    
+        const response = await clientHttp.get('http://localhost:8000/api/announce/getAll')
+        announcements.value = response.data.announcements;
+        moyennes.value = response.data.moyennes;
+
     } catch (err) {
         console.error("Erreur lors de l'affichage de l'annonce", err);
         successMessage.value = '';
@@ -42,12 +27,8 @@ const getAllAnnounce = async () => {
     }
 };
 
-// supprimer une annonce
-
 const deleteAnnounceId = async (id: number) => {
-
     try {
-
         const response = await clientHttp.delete(`http://localhost:8000/api/announce/delete/${id}`, {
             headers: {
                 Authorization: 'Bearer ' + token!,
@@ -55,21 +36,19 @@ const deleteAnnounceId = async (id: number) => {
         });
 
         console.log("message de suppression :", response.data);
-        successMessage.value = "Annoncee supprimée avec succès !";
+        successMessage.value = "Annonce supprimée avec succès !";
         getAllAnnounce();
-        /* router.replace('/'); */
+
     } catch (err) {
         console.error("Erreur lors de la suppression de l'annonce", err);
         error.value = "Erreur lors de la suppression de l'annonce";
     }
 };
+
 const selectedAnnounce = ref()
 const getCurrentAnnounce = (announce: any) => {
-
     selectedAnnounce.value = announce
 }
-
-//ajouter une note
 
 const addNote = async (id: number) => {
     try {
@@ -84,44 +63,17 @@ const addNote = async (id: number) => {
         });
 
         console.log("Note ajoutée :", response.data);
+        
+        getAllAnnounce();
 
     } catch (err) {
         console.error("Erreur lors de l'ajout de la note", err);
-
     }
 };
 
-//moyenne des notes par annonce
-//Afficher tous les annonces
-
- const getAnnouncement = async (id: number) => {
-   try {
-        const token = JSON.parse(localStorage.getItem("token")!);
-        const response = await clientHttp.get(`http://localhost:8000/api/announce/get/${id}`, {
-            headers: {
-                Authorization: 'Bearer ' + token!
-            }
-        });
-        
-        const notesAverages = response.data.moyenne;
-        averageAnnounce.value = notesAverages; 
-        
-        console.log("moy", averageAnnounce.value);
-        
-
-    }  catch (err) {
-        console.error("Erreur lors de l'affichage de l'annonce", err);
-        successMessage.value = '';
-        error.value = "Vous n'êtes pas connecté";
-    }
-}; 
-
-
 onMounted(() => {
     getAllAnnounce();
-   
 });
-
 </script>
 
 <template>
@@ -190,8 +142,11 @@ onMounted(() => {
 
                         </div>
                     </div>
-                    <div >
-                        moyenne :  {{ averageAnnounce }}
+
+                    <div>
+                        <span>
+                            Moyenne : {{ moyennes[annonce.id] }}
+                        </span>
                     </div>
 
 

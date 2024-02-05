@@ -3,15 +3,13 @@ import editIcon from "@/components/icons/editIcon.vue"
 import deleteIcon from "@/components/icons/deleteIcon.vue"
 import { ref, onMounted } from 'vue';
 import clientHttp from "@/libs/clientHttp";
-import { useRouter, RouterLink } from 'vue-router';
+import { RouterLink } from 'vue-router';
 
-const router = useRouter()
 
 const error = ref("")
 const successMessage = ref("")
 const category = ref<any>();
 
-/* const categoryId = route.params.id; */
 
 const getAllCategory = async () => {
     try {
@@ -29,7 +27,7 @@ const getAllCategory = async () => {
     }
 }
 
-const deleteCategory = async (id) => {
+const deleteCategory = async (id:number) => {
     
     try {
         const token = JSON.parse(localStorage.getItem("token")!);
@@ -61,7 +59,6 @@ onMounted(() => {
             <table class="table table-hover table-responsive-sm">
                 <thead>
                     <tr class="table-dark">
-                        <th>Id</th>
                         <th>Catégorie</th>
                         <th>Description</th>
                         <th>Action</th>
@@ -69,7 +66,6 @@ onMounted(() => {
                 </thead>
                 <tbody v-for="Cat in category" :key="Cat.id">
                     <tr>
-                        <td>{{ Cat.id }}</td>
                         <td>{{ Cat.name }}</td>
                         <td>{{ Cat.description }}</td>
                         <td style="display: flex; gap: 10px;">

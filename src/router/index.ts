@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Admin from '@/views/Admin.vue';
+import Admin_Categories from '@/views/Admin_Categories.vue';
+import Admin_Users from '@/views/Admin_Users.vue'
+
 import Register from '@/views/user/Register.vue';
 import Verify from '@/views/user/VerifyCode.vue';
 import Login from '@/views/user/Login.vue';
@@ -104,9 +106,21 @@ const router = createRouter({
       meta: { requiresAuth: true } 
     },
     {
-      path: '/admin',
-      name: 'admin',
-      component: Admin,
+      path: '/admin/categories',
+      name: 'admin_categories',
+      component: Admin_Categories,
+      beforeEnter: (to, from, next) => {
+        if (isAdmin()) {
+          next();
+        } else {
+          next('/');
+        }
+      },
+    },
+    {
+      path: '/admin/users',
+      name: 'admin_users',
+      component: Admin_Users,
       beforeEnter: (to, from, next) => {
         if (isAdmin()) {
           next();

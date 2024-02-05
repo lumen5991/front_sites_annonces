@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import clientHttp from "@/libs/clientHttp";
-
 import { useRouter } from 'vue-router';
 
 
@@ -11,11 +10,11 @@ const title = ref('');
 const body = ref('');
 const category = ref('');
 const pictures = ref(); 
+const categories = ref();
 
 const error = ref('');
 const successMessage = ref('');
 
-const categories = ref();
 
 const onFilePicture = (e: Event) => {
     const target = e.target as HTMLInputElement;

@@ -22,17 +22,26 @@ const login = async () => {
         const response = await clientHttp.post('http://localhost:8000/api/user/login', user);
 
         const token = response.data.token
-        localStorage.setItem("token",JSON.stringify(token));
+        localStorage.setItem("token", JSON.stringify(token));
 
-       /*  const user_data = response.data.user
-        localStorage.setItem("user", JSON.stringify(user_data));  */
+        /*  const user_data = response.data.user
+         localStorage.setItem("user", JSON.stringify(user_data));  */
 
         const roles = response.data.roles
         localStorage.setItem("roles", JSON.stringify(roles))
+        const userRoles = JSON.parse(localStorage.getItem("token")!);
 
         successMessage.value = 'Connection réussie';
         error.value = '';
-        router.replace('/');
+        if (userRoles.includes('admin')) {
+
+            router.replace('/admin/categories');
+        }
+        else
+        {
+            router.replace('/');
+        }
+
     }
 
     catch (err) {
@@ -80,12 +89,16 @@ const login = async () => {
                                     <button type="submit" class="btn btn-secondary" translate="no">Valider</button>
                                 </div>
                                 <div class="mt-2">
-                                    <p style="color:red;">Mot de passe oubliez? <span> <RouterLink :to="`/forget_password`"> CLIQUEZ ICI </RouterLink> </span></p>
+                                    <p style="color:red;">Mot de passe oubliez? <span>
+                                            <RouterLink :to="`/forget_password`"> CLIQUEZ ICI </RouterLink>
+                                        </span></p>
                                 </div>
                                 <div class="mt-2">
-                                    <p style="color:red;">Pas de compte? <span> <RouterLink :to="`/register`"> S'INSCRIRE </RouterLink> </span></p>
+                                    <p style="color:red;">Pas de compte? <span>
+                                            <RouterLink :to="`/register`"> S'INSCRIRE </RouterLink>
+                                        </span></p>
                                 </div>
-                                
+
 
                             </div>
                         </div>
@@ -95,5 +108,4 @@ const login = async () => {
             </div>
         </div>
 
-    </div>
-</template>
+</div></template>

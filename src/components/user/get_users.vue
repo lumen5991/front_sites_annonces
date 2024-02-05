@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import clientHttp from "@/libs/clientHttp";
-import { RouterLink, useRouter } from 'vue-router';
-const router = useRouter();
+
 
 const error = ref('');
 const successMessage = ref('');
 const users = ref<any>();
-const roles = ref<any>();
+
 
 // afficher les utilisateurs connectés
 const getAllUsers = async () => {

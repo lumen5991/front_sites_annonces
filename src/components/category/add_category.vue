@@ -1,31 +1,14 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import clientHttp from "@/libs/clientHttp";
-import { useRouter } from 'vue-router';
 
-const router = useRouter()
 
 const name = ref("");
 const description = ref("");
 const error = ref("");
 const successMessage = ref("");
 
-const getAllCategory = async () => {
-    try {
-        const token = JSON.parse(localStorage.getItem("token")!);
-        console.log('token_user', token);
-        const response = await clientHttp.get('http://localhost:8000/api/category/getAll', {
-            headers: {
-                Authorization: 'Bearer ' + token!
-            }
-        });
-    } catch (err) {
-        console.error("Erreur lors de la récupération de l'utilisateur", err);
-        successMessage.value = '';
-        error.value = "Vous n'êtes pas connecté";
-    }
-}
-
+//Ajouter une catégorie
 const add_category = async () => {
     try {
         const token = JSON.parse(localStorage.getItem("token")!);
@@ -49,7 +32,8 @@ const add_category = async () => {
             error.value = '';
             name.value = '';
             description.value = '';
-            window.location.reload(); 
+            window.location.reload();  
+          
         }
     } catch (err) {
         console.error('Erreur catch:', err);
@@ -57,6 +41,24 @@ const add_category = async () => {
         error.value = "Erreur lors de l'ajout de la catégorie";
     }
 }
+
+//récupérer les catégories
+const getAllCategory = async () => {
+    try {
+        const token = JSON.parse(localStorage.getItem("token")!);
+        console.log('token_user', token);
+        const response = await clientHttp.get('http://localhost:8000/api/category/getAll', {
+            headers: {
+                Authorization: 'Bearer ' + token!
+            }
+        });
+    } catch (err) {
+        console.error("Erreur lors de la récupération des catégories", err);
+        successMessage.value = '';
+        error.value = "Vous n'êtes pas connecté";
+    }
+}
+
 
 
 onMounted(() => {

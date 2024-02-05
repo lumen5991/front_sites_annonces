@@ -59,7 +59,7 @@ const edit_category = async () => {
 
             successMessage.value = 'Catégorie modifiée avec succès';
             error.value = '';
-            router.replace('/admin')
+            router.replace('/admin/categories')
 
         }
     }
