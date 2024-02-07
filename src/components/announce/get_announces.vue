@@ -7,6 +7,8 @@ import deleteIcon from '../icons/deleteIcon.vue';
 
 const error = ref("");
 const successMessage = ref("");
+const isLoading = ref(true);
+
 const announcements = ref<any[]>();
 const moyennes = ref<any>({});
 const rating = ref(0);
@@ -14,16 +16,17 @@ const rating = ref(0);
 const token = JSON.parse(localStorage.getItem("token")!);
 
 const getAllAnnounce = async () => {
+    isLoading.value = true; 
     try {
-
-        const response = await clientHttp.get('http://localhost:8000/api/announce/getAll')
+        const response = await clientHttp.get('http://localhost:8000/api/announce/getAll');
         announcements.value = response.data.announcements;
         moyennes.value = response.data.moyennes;
-
     } catch (err) {
         console.error("Erreur lors de l'affichage de l'annonce", err);
         successMessage.value = '';
         error.value = "Vous n'êtes pas connecté";
+    } finally {
+        isLoading.value = false; 
     }
 };
 
@@ -79,7 +82,8 @@ onMounted(() => {
 <template>
     <div>
         <div>
-            <div class="container">
+            <div v-if="isLoading" class="loader"></div>
+            <div v-else class="container">
                 <div v-for="(annonce, index) in announcements" :key="index" style="border: 1px solid gray;padding: 10px;"
                     class="announce">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -161,5 +165,7 @@ onMounted(() => {
 .star-note {
     color: brown;
 }
+
+    
 </style>
   

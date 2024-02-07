@@ -5,11 +5,15 @@ import clientHttp from "@/libs/clientHttp";
 
 const error = ref('');
 const successMessage = ref('');
+const isLoading = ref(true)
+
 const users = ref<any>();
 
 
 // afficher les utilisateurs connectés
 const getAllUsers = async () => {
+  isLoading.value = true
+
   try {
     const token = JSON.parse(localStorage.getItem("token")!);
     console.log('token_user', token);
@@ -26,6 +30,10 @@ const getAllUsers = async () => {
     console.error("Erreur lors de la récupération des utilisateurs", err);
     successMessage.value = '';
     error.value = "Vous n'êtes pas connecté";
+  }
+
+  finally{
+    isLoading.value = false
   }
 };
 
@@ -91,7 +99,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="container mt-5">
+  <div>
+    <div v-if="isLoading" class="loader"></div>
+    <div v-else class="container mt-5">
     <h2>Liste des utilisateurs</h2>
 
     <table class="table table-bordered table-striped">
@@ -132,4 +142,7 @@ onMounted(() => {
       </ul>
     </nav>
   </div>
+
+  </div>
+ 
 </template>

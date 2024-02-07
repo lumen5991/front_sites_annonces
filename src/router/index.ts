@@ -9,9 +9,13 @@ import My_account from '@/views/user/My_account.vue';
 import Edit_user from '@/views/user/Edit_user.vue';
 import Forget_password from '@/views/user/Forget_password.vue';
 import Edit_category from '@/views/category/Edit_category.vue';
+import Details_category from '@/views/category/Details_category.vue'
 import Add_announce from "@/views/announce/Add_announce.vue";
 import Edit_announce from "@/views/announce/Edit_announce.vue";
 import Announce from "@/views/announce/Announce.vue";
+import NotFound from "@/views/NotFound.vue"
+
+
 
 const isAuthenticated = () => {
   return localStorage.getItem('token');
@@ -100,6 +104,19 @@ const router = createRouter({
       
     },
     {
+      path: '/details_category/:id',
+      name: 'details_category',
+      component: Details_category,
+      beforeEnter: (to, from, next) => {
+        if (isAdmin()) {
+          next();
+        } else {
+          next('/');
+        }
+      },
+      
+    },
+    {
       path: '/add_announce',
       name: 'add_announce',
       component: Add_announce,
@@ -134,6 +151,12 @@ const router = createRouter({
       name: 'edit_announce',
       component: Edit_announce,
       meta: { requiresAuth: true } 
+    },
+    {
+      path: '/:notFound',
+      name: 'notFound',
+      component: NotFound,
+   
     },
   ]
 });

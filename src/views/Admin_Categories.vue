@@ -9,26 +9,35 @@ import get_users from "@/components/user/get_users.vue";
 
 
 
-onMounted(()=>{
+onMounted(() => {
 })
 </script>
 <template>
-    <header>
+    <div style="position: relative;">
+        <header>
         <navbar />
     </header>
     <main>
         <div class="barner">
             <barner />
         </div>
-        <div class="category">
-            <add_category/>
-
+        <div style="display: flex; justify-content: end; margin: 20px; text-decoration: underline;">
+            <router-link :to="`/admin/users`" class="btn">
+                Accéder à la page des utilisateurs
+            </router-link>
         </div>
+        <div class="category">
+            <add_category />
+        </div>
+
         <div class="category">
             <get_category />
         </div>
 
     </main>
+
+    </div>
+    
 </template>
 <style scoped>
 .category {

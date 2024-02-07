@@ -14,6 +14,7 @@ const categories = ref();
 
 const error = ref('');
 const successMessage = ref('');
+const isLoading = ref(true)
 
 
 const onFilePicture = (e: Event) => {
@@ -28,6 +29,7 @@ const onFilePicture = (e: Event) => {
 };
 
 const addAnnounce = async () => {
+    isLoading.value = true
     try {
         const formData = new FormData();
         formData.append("title", title.value);
@@ -66,6 +68,9 @@ const addAnnounce = async () => {
         console.error('Je ne suis pas connecté au backend :', err);
         successMessage.value = '';
         error.value = "Erreur lors de l'ajout de l'annonce";
+    }
+    finally{
+        isLoading.value = false
     }
 };
 
@@ -122,7 +127,7 @@ onMounted(async () => {
                                 </div>
                                 <input type="file" @change="onFilePicture" id="files" name="files" multiple>
                             </div>
-                            <div class="" style="text-align: right;">
+                            <div class="" style="text-align: right;" v-if="isLoading">
                                 <button type="submit" class="btn btn-secondary" translate="no">Valider</button>
                             </div>
                         </div>

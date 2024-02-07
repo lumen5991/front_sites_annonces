@@ -7,10 +7,13 @@ const router = useRouter();
 
 const error = ref('');
 const successMessage = ref('');
+const isLoading = ref(true)
+
 const user = ref<any>();
 
 //afficher l'utilisateur connecté
 const getUser = async () => {
+    isLoading.value = true
     try {
         const token = JSON.parse(localStorage.getItem("token")!);
         console.log('token_user', token);
@@ -27,6 +30,9 @@ const getUser = async () => {
         console.error("Erreur lors de la récupération de l'utilisateur", err);
         successMessage.value = '';
         error.value = "Vous n'êtes pas connecté";
+    }
+    finally{
+        isLoading.value = false
     }
 };
 
@@ -61,6 +67,7 @@ onMounted(() => {
 <template>
     <div>
         <navbar />
+        <div v-if="isLoading" class="loader"></div>
         <div class="container_myAccount">
             <div>
                 <form @submit.prevent="">
@@ -133,4 +140,6 @@ onMounted(() => {
         </div>
     </div>
 </template>
+
+
 

@@ -29,16 +29,18 @@ const login = async () => {
 
         const roles = response.data.roles
         localStorage.setItem("roles", JSON.stringify(roles))
-        const userRoles = JSON.parse(localStorage.getItem("token")!);
-
+        const userRoles = JSON.parse(localStorage.getItem("roles")!);
+        console.log(userRoles);
+        
         successMessage.value = 'Connection réussie';
         error.value = '';
+        
         if (userRoles.includes('admin')) {
 
             router.replace('/admin/categories');
         }
-        else
-        {
+        
+        else {
             router.replace('/');
         }
 
@@ -108,4 +110,5 @@ const login = async () => {
             </div>
         </div>
 
-</div></template>
+    </div>
+</template>
