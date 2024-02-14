@@ -49,34 +49,34 @@ nav {
 }
 
 
-.search {
+/* .search {
   border-radius: 20px;
   outline: none;
   border: none;
   padding: 5px 10px;
- /*  background-color: gray; */
+ /*  background-color: gray; 
  border: 2px solid #000;
 }
 .search::placeholder{
   color: var(--navbar-bg-color);
 }
-
-.add_announce {
+ */
+/* .add_announce {
   background-color: var(--other-blue);
   padding: 5px 10px;
   border-radius: 20px;
   
-}
+} */
 
-.send_annonce{
+/* .send_annonce{
   text-decoration: none;
   color: var(--logo-bg-color);
-}
+} */
 
-#plus {
+/* #plus {
   font-weight: bolder;
   font-size: larger;
-}
+} */
 
 .icon_list {
   list-style: none;
@@ -139,6 +139,11 @@ nav {
 }
 .container_login, .container_myAccount{
   height:  calc(100vh - 60px) !important;
+}
+
+.content_register {
+  margin-top: 30px; 
+  min-width: 1200px;
 }
 
 .register_c, .login_c, .myAccount{

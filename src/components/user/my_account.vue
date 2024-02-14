@@ -9,6 +9,9 @@ const error = ref('');
 const successMessage = ref('');
 const isLoading = ref(true)
 
+const showDeleteModal = ref(false);
+
+
 const user = ref<any>();
 
 //afficher l'utilisateur connecté
@@ -31,7 +34,7 @@ const getUser = async () => {
         successMessage.value = '';
         error.value = "Vous n'êtes pas connecté";
     }
-    finally{
+    finally {
         isLoading.value = false
     }
 };
@@ -49,11 +52,23 @@ const deleteUser = async () => {
         });
         console.log("message de suppression :", response.data);
         localStorage.removeItem("token");
+        closeDeleteModal();
         router.replace('/');
     } catch (err) {
         console.error("Erreur lors de la suppression de l'utilisateur", err);
     }
 };
+
+const closeDeleteModal = () => {
+
+    showDeleteModal.value = !showDeleteModal.value;
+}
+
+//afficher le modal de confirmation
+const proceedToDeleteAccount = () => {
+
+    showDeleteModal.value = !showDeleteModal.value;
+}
 
 
 onMounted(() => {
@@ -65,80 +80,87 @@ onMounted(() => {
 
 
 <template>
-    <div>
-        <navbar />
-        <div v-if="isLoading" class="loader"></div>
-        <div class="container_myAccount">
-            <div>
-                <form @submit.prevent="">
-                    <div v-if="error" class="alert alert-danger">{{ error }}</div>
-                    <div v-if="successMessage" class="alert alert-success">{{ successMessage }}</div>
+    <section>
+        <div>
+            <div v-if="isLoading" class="loader"></div>
+            <div class="container_myAccount">
+                <div>
+                    <form @submit.prevent="">
+                        <div v-if="error" class="alert alert-danger">{{ error }}</div>
+                        <div v-if="successMessage" class="alert alert-success">{{ successMessage }}</div>
 
-                    <div class="myAccount">
-                        <div style="display: flex; align-items: center; justify-content: center;">
-                            <h2 style="color: rgb(114, 108, 108); font-weight: 900;">Mon compte</h2>
-                        </div>
-                        <div class="myAccount_content" v-if="user != undefined" >
-                            <div class="profile-photo">
-                                <div>
-                                    <strong>Photo de profil :</strong>
+                        <div class="myAccount">
+                            <div style="display: flex; align-items: center; justify-content: center;">
+                                <h2 style="color: rgb(114, 108, 108); font-weight: 900;">Mon compte</h2>
+                            </div>
+                            <div class="myAccount_content" v-if="user != undefined">
+                                <div class="profile-photo">
+                                    <div>
+                                        <strong>Photo de profil :</strong>
 
+                                    </div>
+                                    <div style="width: 150px; height: 150px;">
+                                        <img :src="user.picture"
+                                            alt="Pas de photo, veuillez modifier votre compte pour choisir une photo de profil"
+                                            style="width: 100%; height: 100%; object-fit:contain;">
+                                    </div>
                                 </div>
-                                <div style="width: 150px; height: 150px;">
-                                    <img :src="user.picture"
-                                        alt="Pas de photo, veuillez modifier votre compte pour choisir une photo de profil"
-                                        style="width: 100%; height: 100%; object-fit:contain;">
-                                </div>
-                            </div>
-                            <div class="user-details">
-                                <div class="">
-                                    <p><strong>Nom de famille :</strong> {{ user.lastname }}</p>
-                                </div>
-                                <div class="">
-                                    <p><strong>Prénoms :</strong> {{ user.firstname }}</p>
-                                </div>
-                                <div class="">
-                                    <p><strong>Nom d'utilisateur :</strong> {{ user.username }}</p>
-                                </div>
-                                <div class="">
-                                    <p><strong>Email :</strong> {{ user.email }}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="myAccount_crud" style="margin-top: 20px;">
-                            <div>
-                                <RouterLink :to="`/edit_user`" class=" btn btn-success ">Modifier</RouterLink>
-                            </div>
-                            <div>
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                    data-bs-target="#logoutModal">Supprimer</button>
-                                <div id="logoutModal" class="modal fade" tabindex="-1" aria-labelledby="logoutModalLabel"
-                                    aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="logoutModalLabel">Confirmation</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                Êtes-vous sûr de vouloir supprimer votre compte ?
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Non</button>
-                                                <button type="button" class="btn btn-primary" @click="deleteUser">Oui</button>
-                                            </div>
-                                        </div>
+                                <div class="user-details">
+                                    <div class="">
+                                        <p><strong>Nom de famille :</strong> {{ user.lastname }}</p>
+                                    </div>
+                                    <div class="">
+                                        <p><strong>Prénoms :</strong> {{ user.firstname }}</p>
+                                    </div>
+                                    <div class="">
+                                        <p><strong>Nom d'utilisateur :</strong> {{ user.username }}</p>
+                                    </div>
+                                    <div class="">
+                                        <p><strong>Email :</strong> {{ user.email }}</p>
                                     </div>
                                 </div>
                             </div>
+                            <div class="myAccount_crud" style="margin-top: 20px;">
+                                <div>
+                                    <RouterLink :to="`/edit_user`" class=" btn btn-success ">Modifier</RouterLink>
+                                </div>
+                                <button type="button" class="btn btn-danger btn-sm ms-2" @click="proceedToDeleteAccount()">
+                                    Supprimer mon compte
+                                </button>
+
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
+
+        <div v-if="showDeleteModal"
+            style="position: absolute !important; z-index: 100; top: 0; left: 0; background-color: rgba(118, 112, 112, 0.426); min-height: 100vh; min-width: 100vw; display: flex; align-items: center; justify-content: center;">
+            <div class="w-50" style="background-color: white; border-radius: 9px; padding: 10px;">
+
+                <div tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Confirmation</h5>
+                                <button type="button" class="btn-close" @click="closeDeleteModal()"></button>
+                            </div>
+                            <div class="modal-body">
+                                Êtes-vous sûr de vouloir effectuer cette action ?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" @click="closeDeleteModal()">Non</button>
+                                <button type="button" class="btn btn-primary ms-2" @click="deleteUser()">Oui</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
 </template>
 
 

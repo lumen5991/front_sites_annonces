@@ -18,9 +18,7 @@ onMounted(() => {
         <navbar />
     </header>
     <main>
-        <div class="barner">
-            <barner />
-        </div>
+        
         <div style="display: flex; justify-content: end; margin: 20px; text-decoration: underline;">
             <router-link :to="`/admin/users`" class="btn">
                 Accéder à la page des utilisateurs

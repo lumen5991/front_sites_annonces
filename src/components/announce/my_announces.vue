@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import clientHttp from "@/libs/clientHttp";
+import editIcon from '../icons/editIcon.vue';
+import deleteIcon from '../icons/deleteIcon.vue';
+import seeMoreIcon from '../icons/seeMore.vue';
+
 
 const error = ref("");
 const successMessage = ref("");
@@ -12,14 +16,18 @@ const rating = ref(0);
 
 const token = JSON.parse(localStorage.getItem("token")!);
 
-const getAllAnnounce = async () => {
+const getMyannouncements = async () => {
     isLoading.value = true;
     try {
-        const response = await clientHttp.get('http://localhost:8000/api/announce/getAll');
+        const response = await clientHttp.get('http://localhost:8000/api/announce/myAnnouncements', {
+            headers: {
+                Authorization: "Bearer " + token
+            }
+        });
         announcements.value = response.data.announcements;
         moyennes.value = response.data.moyennes;
 
-        console.log("annonces", announcements.value);
+        console.log("mes annpounces", announcements.value);
 
 
     } catch (err) {
@@ -28,6 +36,24 @@ const getAllAnnounce = async () => {
         error.value = "Vous n'êtes pas connecté";
     } finally {
         isLoading.value = false;
+    }
+};
+
+const deleteAnnounceId = async (id: number) => {
+    try {
+        const response = await clientHttp.delete(`http://localhost:8000/api/announce/delete/${id}`, {
+            headers: {
+                Authorization: 'Bearer ' + token!,
+            }
+        });
+
+        console.log("message de suppression :", response.data);
+        successMessage.value = "Annonce supprimée avec succès !";
+        getMyannouncements();
+
+    } catch (err) {
+        console.error("Erreur lors de la suppression de l'annonce", err);
+        error.value = "Erreur lors de la suppression de l'annonce";
     }
 };
 
@@ -50,7 +76,7 @@ const addNote = async (id: number) => {
 
         console.log("Note ajoutée :", response.data);
 
-        getAllAnnounce();
+        getMyannouncements();
 
     } catch (err) {
         console.error("Erreur lors de l'ajout de la note", err);
@@ -58,13 +84,13 @@ const addNote = async (id: number) => {
 };
 
 onMounted(() => {
-    getAllAnnounce();
+    getMyannouncements();
 });
 </script>
 <template>
-    <div class="" style="padding:30px;">
-        <div style="margin-bottom: 50px;">
-            <h1 style="font-weight: bold;">Les annonces récentes</h1>
+    <div style="padding:30px;">
+        <div style="margin: 30px 0;">
+            <h1 style="font-weight: bold;">Mes annonces</h1>
         </div>
         <div v-if="isLoading" class="loader"></div>
         <div v-else>
@@ -80,36 +106,20 @@ onMounted(() => {
                         <p class="body">{{ annonce.body }}</p>
                         <p> <span style="font-weight: bold;">Catégorie :</span>{{ annonce.category.name }}</p>
 
-                        <div style="display: flex; align-items: center;">
-                            <div style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden; border: 1px solid gray; margin-right: 10px;">
-                                <img v-if="annonce.author.picture" :src="annonce.author.picture" alt="Pas de photo de profil"
-                                    style="width: 100%; height: 100%; object-fit: cover;">
-                                <div v-else
-                                    style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; font-size: 30px;">
-                                    👩🏽‍🦲
-                                </div>
-                            </div>
-                            <div>
-                                {{ annonce.author.firstname }} {{ annonce.author.lastname }}
-                            </div>
-                        </div>
-
                     </div>
                     <div class="card-actions">
-                        <RouterLink :to="`/detail_announce/${annonce.id}`" class="btn" style="color: blue;">
-                            Lire plus ...
+                        <RouterLink :to="`/edit_announce/${annonce.id}`" class="btn" style="color: blue;">
+                            <editIcon />
+                        </RouterLink>
+                        <button @click="deleteAnnounceId(annonce.id)" class="btn" style="color: red;">
+                            <deleteIcon />
+                        </button>
+                        <RouterLink :to="`/detail_announce/${annonce.id}`" class="btn" style="color: green;">
+                            <seeMoreIcon />
                         </RouterLink>
                     </div>
-                    <div class="card-rating">
-                        <label for="note">Attribuez une note:</label>
-                        <div class="stars">
-                            <span v-for="(star, i) in 5" :key="i" @click="getCurrentAnnounce(annonce), rating = star"
-                                :class="{ 'filled': star <= rating && selectedAnnounce.id === annonce.id }">
-                                &#9733;
-                            </span>
-                        </div>
-                        <button @click="addNote(annonce.id)" class="btn">Noter</button>
-                        <div>Moyenne : {{ moyennes[annonce.id] }}</div>
+                    <div style="padding: 20px;">
+                        Moyenne : {{ moyennes[annonce.id] }}
                     </div>
                 </div>
             </div>
@@ -118,20 +128,11 @@ onMounted(() => {
 </template>
   
 <style scoped>
-.star-note {
-    color: brown;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-  
-}
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 2fr));
-    gap: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
 }
 
 .card {
@@ -150,7 +151,7 @@ onMounted(() => {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 10px;
+    padding: 0 20px 20px;
 }
 
 .body {

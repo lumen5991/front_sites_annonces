@@ -58,15 +58,12 @@ const deleteCategory = async () => {
     }
 };
 
-const closeDeleteModal = ()=>{
-    selectedElement.value = null;
-    showDeleteModal.value = !showDeleteModal.value;
-}
+
 onMounted(() => {
     getAllCategory();
 });
 
-const pageSize = 3;
+const pageSize = 5;
 const currentPage = ref(1);
 
 const paginatedCategories = computed(() => {
@@ -98,6 +95,12 @@ const changePage = (page: number) => {
 const truncateDescription = (description: string) => {
     return description.length > 50 ? description.slice(0, 50) + "..." : description;
 };
+
+
+const closeDeleteModal = ()=>{
+    selectedElement.value = null;
+    showDeleteModal.value = !showDeleteModal.value;
+}
 
 const proceedToShowDeleteModal = (id:number) =>{
     selectedElement.value = id;

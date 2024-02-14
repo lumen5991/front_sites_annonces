@@ -1,42 +1,105 @@
-@media screen and (max-width: 730px) {
-    .nav_links{
-      display:inline-block;
-      text-align: end;
-      right: 0;
-    }
-      .nav_links_search, .add_announce, .user{
-        margin-bottom: 10px;
-      }
+
+
+@media screen and (max-width: 700px) {
+  .nav_links {
+    display: block;
+    text-align: right;
+  }
+
+  .content_register {
+    min-width: 800px;
+  }
+
+  .nav_links_item {
+    margin-bottom: 10px;
+  }
+
+  .user {
+    display: flex;
+    justify-content: right;
+  }
+
+  .nav_links_search,
+  .add_announce,
+  .user {
+    margin-bottom: 10px;
+  }
 }
 
 @media screen and (max-width: 500px) {
-    nav{
-      display: block;
-      text-align: right;
-      margin-bottom: 10px;
-    }
-    .logo{
-      margin-bottom: 10px;
-    }
+  nav {
+    display: block;
+    text-align: right;
+    margin-bottom: 10px;
+  }
+
+  .logo {
+    margin-bottom: 10px;
+    text-align: right;
+  }
+
+  .content_register {
+    min-width: 200px;
+  }
+
 }
 
-@media screen and (max-width:1000px){
-  .register_input{
+@media screen and (max-width:1200px) {
+  .register_input {
     width: 300px;
   }
+
+  .content_register {
+    min-width: 1000px;
+  }
+  
 }
 
+@media screen and (max-width:1000px) {
+  .register_input {
+    width: 300px;
+  }
+
+  .content_register {
+    min-width: 800px;
+  }
+  
+}
+
+@media screen and (max-width:900px) {
+  .content_register {
+    min-width: 600px;
+  }
+  
+}
+
+
 @media screen and (max-width:730px) {
-  .register_content{
+
+  .register_c, .login_c{
+    margin-top: 100px;
+  }
+
+  .register_content {
     display: block;
   }
-  .register_content_left, register_content_right{
+
+  .content_register {
+    min-width: 400px;
+  }
+  
+
+  .register_content_left,
+  register_content_right {
     margin-bottom: 20px;
   }
-  .register_file_label, .register_file_input{
+
+  .register_file_label,
+  .register_file_input {
     text-align: left;
   }
-  .register_input{
+
+  .register_input {
     width: 100%;
   }
 }

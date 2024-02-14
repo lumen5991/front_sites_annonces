@@ -173,7 +173,6 @@ const changePage = (page: number) => {
           <thead class="thead-dark">
             <tr>
               <th scope="col">ID</th>
-              <th scope="col">Photo</th>
               <th scope="col">Username</th>
               <th scope="col">Email</th>
               <th scope="col">Roles</th>
@@ -183,28 +182,22 @@ const changePage = (page: number) => {
           <tbody v-for="user in paginatedUsers" :key="user.id">
             <tr>
               <th scope="row">{{ user.id }}</th>
-              <td>
-                <div style="width: 40px; height: 40px; ">
-                  <img :src="user.picture"
-                    alt="Not found"
-                    style="width: 100%; height: 100%; object-fit:cover; border-radius: 50%;">
-                </div>
-               
-              </td>
               <td>{{ user.username }}</td>
               <td>{{ user.email }}</td>
               <td>
                 <span v-for="role in user.roles" :key="role.id">{{ role.name }}</span>
               </td>
               <td>
-                <button type="button" class="btn btn-info btn-sm"
-                  :disabled="user.roles.some((role: any) => role.name === 'admin')"
-                  @click="proceedToAssignAdminRole(user.id)">
+                <button type="button" class="btn btn-info btn-sm" 
+                :disabled="user.roles.some((role :any) => role.name === 'admin')"
+                
+                @click="proceedToAssignAdminRole(user.id)">
                   Nommer admin
                 </button>
-                <button type="button" class="btn btn-danger btn-sm ms-2"
-                  :disabled="!user.roles.some((role: any) => role.name === 'admin')"
-                  @click="proceedToRemoveAdminRole(user.id)">
+                <button type="button" class="btn btn-danger btn-sm ms-2" 
+                :disabled="!user.roles.some((role: any) => role.name === 'admin')"
+                
+                @click="proceedToRemoveAdminRole(user.id)">
                   Retirer le rôle
                 </button>
               </td>
@@ -268,7 +261,7 @@ const changePage = (page: number) => {
       </div>
     </div>
 
-  </section>
+</section>
 </template>
 
 <style scoped></style>

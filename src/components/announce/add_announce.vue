@@ -3,24 +3,22 @@ import { ref, onMounted } from 'vue';
 import clientHttp from "@/libs/clientHttp";
 import { useRouter } from 'vue-router';
 
-
 const router = useRouter();
 
 const title = ref('');
 const body = ref('');
 const category = ref('');
-const pictures = ref(); 
+const pictures = ref();
 const categories = ref();
 
 const error = ref('');
 const successMessage = ref('');
 const isLoading = ref(true)
 
-
 const onFilePicture = (e: Event) => {
     const target = e.target as HTMLInputElement;
     if (target.files) {
-        for(let i = 0; i<target.files.length; i++){
+        for (let i = 0; i < target.files.length; i++) {
             console.log(target.files[i])
         }
         pictures.value = target.files;
@@ -42,12 +40,12 @@ const addAnnounce = async () => {
                 formData.append("pictures[]", pictures.value[i]);
 
             }
-        } 
+        }
 
         const token = JSON.parse(localStorage.getItem("token")!);
         console.log('token_user', token);
         console.log(formData)
-        
+
         const response = await clientHttp.post('http://localhost:8000/api/announce/add', formData, {
             headers: {
                 Authorization: 'Bearer ' + token!,
@@ -58,18 +56,18 @@ const addAnnounce = async () => {
         console.log(response);
         successMessage.value = "Ajout de l'annonce fait avec succès";
         error.value = '';
-        title.value ="",
-        body.value = "",
-        category.value="",
-        pictures.value=""
-   
+        title.value = "",
+            body.value = "",
+            category.value = "",
+            pictures.value = ""
+
         router.replace('/');
     } catch (err) {
         console.error('Je ne suis pas connecté au backend :', err);
         successMessage.value = '';
         error.value = "Erreur lors de l'ajout de l'annonce";
     }
-    finally{
+    finally {
         isLoading.value = false
     }
 };
@@ -92,51 +90,63 @@ onMounted(async () => {
 
 <template>
     <div>
-        <navbar />
-    </div>
-    <div class="container_register">
-        <div>
-            <form @submit.prevent="addAnnounce" enctype="multipart/form-data">
-                <div v-if="error" class="alert alert-danger">{{ error }}</div>
-                <div v-if="successMessage" class="alert alert-success">{{ successMessage }}</div>
+        <div class="container_register">
+            <div class="content_register">
+                <form @submit.prevent="addAnnounce" enctype="multipart/form-data">
+                    <div v-if="error" class="alert alert-danger">{{ error }}</div>
+                    <div v-if="successMessage" class="alert alert-success">{{ successMessage }}</div>
 
-                <div class="register_c">
-                    <div style="display: flex; align-items: center; justify-content: center;">
-                        <h2 style="color: rgb(114, 108, 108); font-weight: 900;">Ajouter une annonce</h2>
-                    </div>
-                    <div class="register_content">
-                        <div class="register_content_right">
-                            <div class="box_register_content_right">
-                                <input type="text" v-model="title" class="register_input" id="title"
-                                    placeholder="Titre de l'annonce">
-                            </div>
-                            <div class="box_register_content_right">
-                                <textarea name="body" v-model="body" class="register_input" id="body" cols="10"
-                                    rows="8"></textarea>
-                            </div>
-                            <div class="box_register_content_right">
-                                <select v-model="category" class="form-select" name="category" id="category">
-                                    <option value="" selected disabled>Sélectionner la catégorie</option>
-                                    <option v-for="cat in categories" :value="cat.id">{{ cat.name }}</option>
-                                </select>
-                            </div>
-                           
-                            <div class="box_register_content_right">
-                                <div>
-                                    Choisir des images
+                    <div class="register_c">
+                        <div style="display: flex; align-items: center; justify-content: center;">
+                            <h2 style="color: rgb(114, 108, 108); font-weight: 900;">Ajouter une annonce</h2>
+                        </div>
+                        <div class="register_content">
+                            <div class="register_content_right">
+                                <div class="box_register_content_right">
+                                    <input type="text" v-model="title" class="register_input" id="title"
+                                        placeholder="Titre de l'annonce">
                                 </div>
-                                <input type="file" @change="onFilePicture" id="files" name="files" multiple>
-                            </div>
-                            <div class="" style="text-align: right;" v-if="isLoading">
-                                <button type="submit" class="btn btn-secondary" translate="no">Valider</button>
+                                <div class="box_register_content_right">
+                                    <textarea name="body" v-model="body" class="register_input" id="body" cols="10" rows="8"
+                                        placeholder="Description de l'annonce"></textarea>
+                                </div>
+                                <div class="box_register_content_right">
+                                    <select v-model="category" class="form-select" name="category" id="category">
+                                        <option value="" selected disabled>Sélectionner la catégorie</option>
+                                        <option v-for="cat in categories" :value="cat.id">{{ cat.name }}</option>
+                                    </select>
+                                </div>
+
+                                <div class="box_register_content_right">
+                                    <div>
+                                        <input type="file" class="custom-file-upload" @change="onFilePicture" id="files"
+                                            name="files" multiple>
+                                    </div>
+                                </div>
+                                <div class="box_register_content_right" style="text-align: right;">
+                                    <button type="submit" class="btn" style="background-color: gray; color: #fff;"
+                                        translate="no">Valider</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 </template>
 
 <style scoped>
+.custom-file-upload {
+    display: inline-block;
+    cursor: pointer;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.custom-file-upload:hover {
+    background-color: #0056b3;
+}
 </style>

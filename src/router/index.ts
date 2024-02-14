@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Admin_Categories from '@/views/Admin_Categories.vue';
 import Admin_Users from '@/views/Admin_Users.vue'
-
 import Register from '@/views/user/Register.vue';
 import Verify from '@/views/user/VerifyCode.vue';
 import Login from '@/views/user/Login.vue';
@@ -13,7 +12,9 @@ import Details_category from '@/views/category/Details_category.vue'
 import Add_announce from "@/views/announce/Add_announce.vue";
 import Edit_announce from "@/views/announce/Edit_announce.vue";
 import Announce from "@/views/announce/Announce.vue";
-import NotFound from "@/views/NotFound.vue"
+import Detail_announce from "@/views/announce/Detail_announce.vue";
+import My_announces from "@/views/announce/My_announce.vue"
+import NotFound from "@/views/NotFound.vue";
 
 
 
@@ -146,14 +147,30 @@ const router = createRouter({
         }
       },
     },
+
     {
       path: '/edit_announce/:id',
       name: 'edit_announce',
       component: Edit_announce,
       meta: { requiresAuth: true } 
     },
+
     {
-      path: '/:notFound',
+      path: '/detail_announce/:id',
+      name: 'detai_announce',
+      component: Detail_announce,
+      meta: { requiresAuth: true }
+    },
+
+    {
+      path: '/my_announces',
+      name: 'my_announces',
+      component: My_announces,
+      meta: { requiresAuth: true }
+    },
+
+    {
+      path: '/:pathMatch(.*)*',
       name: 'notFound',
       component: NotFound,
    

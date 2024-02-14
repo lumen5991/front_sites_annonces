@@ -121,7 +121,7 @@ onMounted(async () => {
         <navbar />
     </div>
     <div class="container_register">
-        <div>
+        <div class="content_register">
             <form @submit.prevent="editAnnounce" enctype="multipart/form-data">
                 <div v-if="error" class="alert alert-danger">{{ error }}</div>
                 <div v-if="successMessage" class="alert alert-success">{{ successMessage }}</div>

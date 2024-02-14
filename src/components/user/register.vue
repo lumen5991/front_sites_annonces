@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import navbar from "@/components/navbar.vue";
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import clientHttp from "@/libs/clientHttp";
 import { useRouter } from 'vue-router';
 const router = useRouter();
@@ -30,26 +30,26 @@ const createUser = async () => {
 
         console.log('Réponse du backend :', response.data);
 
-        const UserEmail = response.data.user.email
+        const UserEmail = response.data.user.email;
         localStorage.setItem("userEmail", JSON.stringify(UserEmail));
 
-        successMessage.value = 'Inscription réussie';
+        successMessage.value = response.data.message;
         error.value = '';
 
         router.replace('/verifyCode');
-        /* router.replace({ path: '/verifyCode', query: { email: email.value } });
- */
-    } catch (err) {
-        console.error('Je suis pas connecté au backend :', err);
+        /* router.replace({ path: '/verifyCode', query: { email: email.value } }); */
+
+    } catch (err: any) {
 
         successMessage.value = '';
-        error.value = "Erreur lors de la création de l'utilisateur, l'email ou le nom d'utilisateur existe déjà";
+        if (err.response.status === 422) {
+            error.value = err.response.data.message;
+        } else {
+            error.value = "Erreur lors de la création de l'utilisateur";
+        }
     }
 };
 
-onMounted(() => {
-
-})
 
 </script>
 
@@ -57,22 +57,23 @@ onMounted(() => {
     <div>
         <navbar />
     </div>
-    <div class="container_register">
+    <div class="container_register" >
 
-        <div>
+        <div style="margin-top: 80px;" >
 
             <form @submit.prevent="createUser">
-                <div v-if="error" class="alert alert-danger">{{ error }}</div>
-                <div v-if="successMessage" class="alert alert-success">{{ successMessage }}</div>
 
                 <div class="register_c">
+                    <div v-if="error" class="alert alert-danger">{{ error }}</div>
+                    <div v-if="successMessage" class="alert alert-success">{{ successMessage }}</div>
+
                     <div style="display: flex; align-items: center; justify-content: center;">
                         <h2 style="color: rgb(114, 108, 108); font-weight: 900;">Inscrivez-vous ici</h2>
                     </div>
                     <div class="register_content">
-                        <div class="register_content_left">
+                        <div class="register_content_left" style="width: 30%;">
                             <img src="../../assets/images/user-profile.gif" alt=""
-                                style="width: 100%; height: 100%; object-fit: cover;">
+                                style="max-width: 100%; height: 100%; object-fit: cover;">
                         </div>
                         <div class="register_content_right">
                             <div class="box_register_content_right">
@@ -102,10 +103,12 @@ onMounted(() => {
                             </div>
 
                             <div class="" style="text-align: right;">
-                                <button type="submit" class="btn btn-secondary" translate="no">Valider</button>
+                                <button type="submit" class="btn" style="background-color: #007bff; color: #fff;" translate="no">Valider</button>
                             </div>
                             <div class="mt-2">
-                                <p style="color:red;">Déjà un compte? <span><RouterLink :to="`/login`"> CONNECTEZ-VOUS </RouterLink></span></p>
+                                <p style="color:red;">Déjà un compte? <span>
+                                        <RouterLink :to="`/login`"> CONNECTEZ-VOUS </RouterLink>
+                                    </span></p>
                             </div>
                         </div>
                     </div>
@@ -116,4 +119,7 @@ onMounted(() => {
     </div>
 </template>
 
-<style></style>
+<style scoped>
+
+
+</style>

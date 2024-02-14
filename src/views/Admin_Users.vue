@@ -1,24 +1,19 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
 import navbar from "@/components/navbar.vue";
 import barner from "@/components/barner.vue";
-import get_category from "@/components/category/get_category.vue"
-/* import get_announces from "@/components/announce/get_announces.vue" */
-import add_category from "@/components/category/add_category.vue"
 import get_users from "@/components/user/get_users.vue";
 
 
-
-onMounted(()=>{
-})
 </script>
 <template>
     <header>
         <navbar />
     </header>
     <main>
-        <div class="barner">
-            <barner />
+        <div style="display: flex; justify-content: end; margin: 20px; text-decoration: underline;">
+            <router-link :to="`/admin/categories`" class="btn">
+                Accéder à la page des catégories
+            </router-link>
         </div>
        
         <div>

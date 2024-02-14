@@ -3,5 +3,5 @@
 </script>
 
 <template>
-    <Details_category/>
+    <detailsCategory/>
 </template>

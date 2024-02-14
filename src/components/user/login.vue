@@ -24,8 +24,8 @@ const login = async () => {
         const token = response.data.token
         localStorage.setItem("token", JSON.stringify(token));
 
-        /*  const user_data = response.data.user
-         localStorage.setItem("user", JSON.stringify(user_data));  */
+        const user_data = response.data.user
+        localStorage.setItem("user", JSON.stringify(user_data));  
 
         const roles = response.data.roles
         localStorage.setItem("roles", JSON.stringify(roles))

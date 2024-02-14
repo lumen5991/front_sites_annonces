@@ -13,7 +13,7 @@ const token = JSON.parse(localStorage.getItem("token")!);
 
 const logout = async () => {
     try {
-       
+
         const response = await clientHttp.post("http://localhost:8000/api/user/logout", null, {
             headers: {
                 Authorization: "Bearer " + token
@@ -36,13 +36,13 @@ onMounted(() => {
         remove.value = true;
         disconnect.value = false
     }
-    else{
+    else {
         remove.value = false
         disconnect.value = true
     }
 
 
-    
+
 })
 
 
@@ -61,23 +61,22 @@ onMounted(() => {
                 </a>
             </div>
             <div class="nav_links">
-                <div class="nav_links_search">
+                <!-- <div class="nav_links_search">
                     <form action="">
                         <input type="search" name="" id="" class="search" placeholder="Que recherchez-vous ?">
                     </form>
-                </div>
-                <div class="add_announce">
-
-                    <RouterLink :to="`/announcement`" class="send_annonce">
-                       <!--  <span id="plus">+</span> <span>Déposer une annonce</span> -->
-                       <span>Accéder aux annonces</span>
-                       
+                </div> -->
+                <div class="nav_links_item">
+                    <RouterLink :to="`/add_announce`" class="btn" style="background-color: #ff0019b0; color: #fff; font-weight: bolder;">
+                        <span id="plus">+</span> <span>Déposer une annonce</span>
                     </RouterLink>
                 </div>
-                <div>
 
+                <div class="nav_links_item">
+                    <RouterLink :to="`/my_announces`" class="btn" style="background-color: #1B62C6; color: #fff; font-weight: bolder;">
+                        <span>Voir mes annonces</span>
+                    </RouterLink>
                 </div>
-
 
                 <div class="user">
                     <div class="user_icon">
@@ -108,15 +107,15 @@ onMounted(() => {
                                         </p>
                                     </li>
                                     <li v-show="!disconnect" class="">
-                                        
-                                        <button class="btn submenu_link"  @click="logout">Se Déconnecter</button>
-                                        
+
+                                        <button class="btn submenu_link" @click="logout">Se Déconnecter</button>
+
                                     </li>
-                                    
+
                                 </ul>
                             </li>
                         </ul>
-                        
+
                     </div>
                 </div>
             </div>
@@ -124,6 +123,4 @@ onMounted(() => {
     </div>
 </template>
 
-<style scoped>
-    
-</style>
+<style scoped></style>
